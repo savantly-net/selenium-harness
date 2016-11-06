@@ -1,0 +1,21 @@
+<section data-ng-controller="ScenariosController">
+	<div class="table-responsive">
+		<div>
+			<a href="#" ng-click="executeSelectedScenarios()">Execute Selected Scenarios</a>
+		</div>
+		<table class="table">
+			<tr ng-repeat="scenario in scenarios">
+				<td>{{scenario.name}}</td>
+				<td>{{scenario.url}}</td>
+				<td><a href="#!/scenarios/{{scenario.id}}/edit">edit </a></td>
+				<td><a href="#" ng-click="executeScenario(scenario)">execute</a></td>
+				<td><input type="checkbox" ng-model="scenario.checked" /></td>
+				<td><img ng-show="scenario.loading" src="modules/core/img/preloaders/ellipsis.svg" /></td>
+			</tr>
+		</table>
+	</div>
+	<div>
+		<div ng-if="loading.length"><img src="modules/core/img/preloaders/gears.svg"/></div>
+		<pre ng-bind="console"></pre>
+	</div>
+</section>

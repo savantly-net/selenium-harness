@@ -8,7 +8,7 @@ import org.springframework.context.ApplicationContext;
 public class Application {
 	
     @SuppressWarnings("unused")
-    private static ApplicationContext applicationContext;
+	private static ApplicationContext applicationContext;
 
     public static void main(String[] args) {
         applicationContext = SpringApplication.run(Application.class, args);
