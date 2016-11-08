@@ -1,18 +1,28 @@
 <section data-ng-controller="ScenariosController">
-	<div class="table-responsive">
-		<div>
-			<a href="#" ng-click="executeSelectedScenarios()">Execute Selected Scenarios</a>
+	<div>
+		<div class="btn-group" role="group" aria-label="Scenario Operations">
+		  <button type="button" class="btn btn-default" ng-click="executeSelectedScenarios()"><span title="execute" class="glyphicon glyphicon-play"></span></button>
 		</div>
-		<table class="table">
-			<tr ng-repeat="scenario in scenarios">
-				<td>{{scenario.name}}</td>
-				<td>{{scenario.url}}</td>
-				<td><a href="#!/scenarios/{{scenario.id}}/edit">edit </a></td>
-				<td><a href="#" ng-click="executeScenario(scenario)">execute</a></td>
-				<td><input type="checkbox" ng-model="scenario.checked" /></td>
-				<td><img ng-show="scenario.loading" src="modules/core/img/preloaders/ellipsis.svg" /></td>
-			</tr>
-		</table>
+		
+		<div class="pull-right">
+			<a href="#!/scenarios/create" class="btn btn-default">New Scenario</a>
+		</div>
+		<hr />
+		<div class="container-fluid scenario-list">
+			<div class="row" ng-class-even="'even-row'" ng-repeat="scenario in scenarios">
+				<div class="col col-sm-8 col-xs-8 shorten"><input type="checkbox" no-wrap ng-model="scenario.checked" /> {{scenario.name}}: {{scenario.description}}</div>
+				<div class="col col-sm-4 col-xs-4">
+					<img ng-show="scenario.loading" src="modules/core/img/preloaders/ellipsis.svg" />
+					<div ng-hide="scenario.loading" class="pull-right">
+						<a href="#!/scenarios/{{scenario.id}}/edit"><span title="edit" class="glyphicon glyphicon-pencil"></span></a>
+						<a href="#!" ng-click="duplicate(scenario)"><span title="duplicate" class="glyphicon glyphicon-duplicate grey"></span></a>
+						<a href="#" ng-click="executeScenario(scenario)"><span title="execute" class="glyphicon glyphicon-play green"></span></a>
+						<a href="#" ng-click="deleteScenario(scenario)"><span title="delete" class="glyphicon glyphicon-remove red"></span></a>
+					</div>
+				</div>
+				<div class="col col-sm-12 col-xs-12 shorten text-muted">{{scenario.url}}</div>
+			</div>
+		</div>
 	</div>
 	<div>
 		<div ng-if="loading.length"><img src="modules/core/img/preloaders/gears.svg"/></div>

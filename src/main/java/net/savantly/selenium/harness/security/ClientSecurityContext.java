@@ -1,4 +1,4 @@
-package net.savantly.selenium.harness.domain;
+package net.savantly.selenium.harness.security;
 
 import java.util.Collection;
 

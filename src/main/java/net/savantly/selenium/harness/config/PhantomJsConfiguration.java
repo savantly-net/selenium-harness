@@ -1,16 +1,18 @@
 package net.savantly.selenium.harness.config;
 
 import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriverService;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Scope;
 
 import net.anthavio.phanbedder.Phanbedder;
 
@@ -19,12 +21,19 @@ public class PhantomJsConfiguration {
 	private static File phantomjs = Phanbedder.unpack();
 	public static final String PHANTOM_EXEC_PATH = phantomjs.getAbsolutePath();
 	
+	@Autowired
+	SeleniumServerConfiguration seleniumServerConfig;
+	@Value("${phantomjs.selenium-hub}")
+	private String seleniumHubHost;
+	@Value("${phantomjs.selenium-hub-port}")
+	private String seleniumHubPort;
+	
 
 	private Capabilities capability;
 	
 	@Bean
-	@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-	public WebDriver getWebDriver(){
+	//@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+	public WebDriver getWebDriver() throws MalformedURLException{
 		DesiredCapabilities desiredCaps = new DesiredCapabilities();
 		desiredCaps.merge(capability);
 		desiredCaps.setCapability(PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY, PhantomJsConfiguration.PHANTOM_EXEC_PATH);
@@ -50,12 +59,16 @@ public class PhantomJsConfiguration {
 		desiredCaps.setCapability("acceptSslCerts", true);
 		desiredCaps.setCapability("nativeEvents", true);
 		
+		desiredCaps.setBrowserName("phantomjs");
+		
+		String seleniumHub = "http://" + seleniumHubHost + ":" + seleniumHubPort;
 		
 		// Control LogLevel for GhostDriver, via CLI arguments
 		desiredCaps.setCapability(PhantomJSDriverService.PHANTOMJS_GHOSTDRIVER_CLI_ARGS,
-				new String[] { "--logLevel=DEBUG" });
+				new String[] { "--logLevel=DEBUG",  "--webdriver-selenium-grid-hub=" + seleniumHub});
 		
-        WebDriver driver = new PhantomJSDriver(desiredCaps);
+        //WebDriver driver = new PhantomJSDriver(desiredCaps);
+		WebDriver driver = new RemoteWebDriver(new URL(seleniumHub + "/wd/hub"), desiredCaps);
 		return driver;
 	}
 

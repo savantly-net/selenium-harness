@@ -1,14 +1,16 @@
 <section data-ng-controller="HomeController">
-	<div class="hero-unit container">
-		<div class="row-fluid">
-			<div class="text-center">
-				<img alt="Selenium Harness!" src="modules/core/img/brand/big-logo.png" />
-			</div>
-		</div>
-		<div class="row-fluid row-space">
-			
-		</div>
+	<div class="jumbotron">
+		<img alt="Selenium Harness!"
+					src="modules/core/img/brand/big-logo.png" />
+		<h1>Selenium Harness</h1>
+		<p class="lead">
+			Create collections [<em>scenes</em>] of test cases [<em>scenarios</em>]
+		</p>
+		<p>Selenium-Harness provides a web interface to manage automated UI testing, 
+			leveraging Selenium + PhantomJS + GhostDriver</p>
+		<p>Individual tests, or <em>scenarios</em>, can be executed or added to a <em>scene</em> for group execution .</p>
+		<p>Currently the output is printed to the screen, but more API functions will be added soon, for integration with other systems, such as Jenkins for continous integration.</p>
+		<p>With some modification, this may also prove useful for an automated monitoring platform with integration endpoints for systems like Bosun or Grafana</p>
 	</div>
-	<div><a href="#!/scenarios/create">New Scenario</a></div>
-	<div data-ng-include="'modules/scenarios/views/list.view.html'"></div>
+
 </section>

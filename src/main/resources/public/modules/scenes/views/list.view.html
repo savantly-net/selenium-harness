@@ -1,0 +1,21 @@
+<section data-ng-controller="ScenesController">
+	<div class="table-responsive">
+		<div>
+			<a href="#" ng-click="executeSelectedScenes()">Execute Selected Scenarios</a>
+		</div>
+		<table class="table">
+			<tr ng-repeat="scene in scenes">
+				<td>{{scene.name}}</td>
+				<td>{{scene.description}}</td>
+				<td><a href="#!/scenes/{{scene.id}}/edit">edit </a></td>
+				<td><a href="#" ng-click="executeScene(scene)">execute</a></td>
+				<td><input type="checkbox" ng-model="scene.checked" /></td>
+				<td><img ng-show="scene.loading" src="modules/core/img/preloaders/ellipsis.svg" /></td>
+			</tr>
+		</table>
+	</div>
+	<div>
+		<div ng-if="loading.length"><img src="modules/core/img/preloaders/gears.svg"/></div>
+		<pre ng-bind="console"></pre>
+	</div>
+</section>

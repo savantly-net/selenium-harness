@@ -5,10 +5,11 @@ import javax.annotation.PostConstruct;
 import org.openqa.grid.internal.utils.configuration.StandaloneConfiguration;
 import org.openqa.selenium.remote.server.SeleniumServer;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-/*@Configuration
-@ConfigurationProperties(prefix="selenium.server")*/
+@Configuration
+@ConfigurationProperties(prefix="selenium.server")
 public class SeleniumServerConfiguration {
 
 	private StandaloneConfiguration serverConfig = new StandaloneConfiguration();
@@ -20,20 +21,11 @@ public class SeleniumServerConfiguration {
 	private Integer port;
 	private String role;
 	private Integer timeout;
-	
-	private SeleniumServer startSeleniumServer() {
-	    final SeleniumServer server;
-	    try {
-	        server = new SeleniumServer(serverConfig);
-	        server.boot();
-	    } catch (Exception e) {
-	        throw new IllegalArgumentException("Failed to start embedded Selenium Server",e);
-	    }
-	    return server;
-	}
+	private boolean enabled;
+	private SeleniumServer seleniumServer;
 	
 	@PostConstruct
-	private void init(){
+	private SeleniumServer startSeleniumServer() {
 		serverConfig.browserTimeout = browserTimeout;
 		serverConfig.debug = debug;
 		serverConfig.help = help;
@@ -42,7 +34,19 @@ public class SeleniumServerConfiguration {
 		serverConfig.port = port;
 		serverConfig.role = role;
 		serverConfig.timeout = timeout;
-		startSeleniumServer();
+		
+	    try {
+	    	seleniumServer = new SeleniumServer(serverConfig);
+	    	seleniumServer.boot();
+	    } catch (Exception e) {
+	        throw new IllegalArgumentException("Failed to start embedded Selenium Server",e);
+	    }
+	    return seleniumServer;
+	}
+	
+	@Bean
+	public SeleniumServer seleniumServerBean(){
+		return seleniumServer;
 	}
 
 	public Integer getBrowserTimeout() {
@@ -107,5 +111,13 @@ public class SeleniumServerConfiguration {
 
 	public void setTimeout(Integer timeout) {
 		this.timeout = timeout;
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 }

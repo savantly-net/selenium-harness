@@ -39,6 +39,13 @@ angular.module('scenarios').controller('ScenariosController', ['$scope', '$rootS
 			});
 		};
 		
+		$scope.duplicate = function(scenario){
+			$scope.item = scenario;
+			$scope.item.id = null;
+			$scope.item.name = $scope.item.name + ' COPY';
+			$scope.save();
+		}
+		
 		$scope.cancel = function(){
 			$location.path('scenarios/');
 		};

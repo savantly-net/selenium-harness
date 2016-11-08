@@ -2,7 +2,7 @@
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
 
 .content {
-	margin-top: 50px;
+	margin-top: 60px;
 }
 .undecorated-link:hover {
 	text-decoration: none;

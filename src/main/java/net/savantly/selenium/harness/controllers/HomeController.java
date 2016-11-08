@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import net.savantly.selenium.harness.domain.ClientSecurityContext;
+import net.savantly.selenium.harness.security.ClientSecurityContext;
 
 @Controller
 public class HomeController {

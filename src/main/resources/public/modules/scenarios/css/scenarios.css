@@ -1,0 +1,20 @@
+.scenario-list div{
+	white-space: nowrap;
+}
+
+.scenario-list div a{
+	padding-left: 0.3em;
+}
+
+.scenario-list .shorten{
+	overflow-x: hidden;
+}
+
+.scenario-list .row{
+	padding-top: 0.3em;
+	padding-bottom: 0.3em;
+}
+
+.scenario-list .even-row {
+	background-color: #DDD;
+}
