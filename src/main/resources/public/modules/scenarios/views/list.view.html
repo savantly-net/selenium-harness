@@ -15,9 +15,9 @@
 					<img ng-show="scenario.loading" src="modules/core/img/preloaders/ellipsis.svg" />
 					<div ng-hide="scenario.loading" class="pull-right">
 						<a href="#!/scenarios/{{scenario.id}}/edit"><span title="edit" class="glyphicon glyphicon-pencil"></span></a>
-						<a href="#!" ng-click="duplicate(scenario)"><span title="duplicate" class="glyphicon glyphicon-duplicate grey"></span></a>
-						<a href="#" ng-click="executeScenario(scenario)"><span title="execute" class="glyphicon glyphicon-play green"></span></a>
-						<a href="#" ng-click="deleteScenario(scenario)"><span title="delete" class="glyphicon glyphicon-remove red"></span></a>
+						<a href ng-click="duplicate(scenario)"><span title="duplicate" class="glyphicon glyphicon-duplicate grey"></span></a>
+						<a href ng-click="executeScenario(scenario)"><span title="execute" class="glyphicon glyphicon-play green"></span></a>
+						<a href ng-click="deleteScenario(scenario)"><span title="delete" class="glyphicon glyphicon-remove red"></span></a>
 					</div>
 				</div>
 				<div class="col col-sm-12 col-xs-12 shorten text-muted">{{scenario.url}}</div>

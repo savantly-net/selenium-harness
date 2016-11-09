@@ -83,5 +83,15 @@ angular.module('scenarios').controller('ScenariosController', ['$scope', '$rootS
 				$scope.log(msg);
 			});
 		};
+		
+		$scope.deleteScenario = function(scenario){
+			var _scenario = new Scenarios(scenario);
+			_scenario.$delete().then(function(response){
+				var scenarioIndex = $scope.scenarios.indexOf(scenario);
+				if (scenarioIndex > -1){
+					$scope.scenarios.splice(scenarioIndex, 1);
+				}
+			});
+		};
 	}
 ]);
