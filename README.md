@@ -1,6 +1,6 @@
 # selenium-harness
 
-![Selenium](https://raw.githubusercontent.com/savantly-net/selenium-harness/master/src/main/resources/public/modules/core/img/brand/big-logo.png)  
+![Selenium](src/main/resources/public/modules/core/img/brand/big-logo.png)  
 
 ## Create collections [scenes] of test cases [scenarios]  
 
@@ -14,3 +14,41 @@ With some modification, this may also prove useful for an automated monitoring p
 
 ## Spring Boot  
 Selenium-Harness is a SpringBoot application, so you can modify the application.properties file for most settings, including the preferred DB connection.
+
+
+
+## Properties 
+
+```
+##### Servlet
+server.port=3030
+server.contextPath=/
+
+##### for pretty printing of json when endpoints accessed over HTTP
+http.mappers.jsonPrettyPrint=true
+
+##### Configuring info endpoint using maven properties
+info.app.name=@project.name@
+info.app.description=@project.description@
+info.app.version=@project.version@
+
+##### Security
+security.user.password=password
+
+##### Embedded Selenium Server 
+selenium.server.port=4444
+selenium.server.debug=true
+selenium.server.enabled=true
+
+##### Have PhantomJS Use embedded Selenium Server by default
+phantomjs.selenium-hub=127.0.0.1
+phantomjs.selenium-hub-port=4444
+
+##### Datasource for Test Case persistence
+spring.h2.console.enabled=true
+spring.datasource.url=jdbc:h2:~/db/selenium-harness;DB_CLOSE_ON_EXIT=FALSE
+spring.datasource.username=sa
+spring.datasource.password=
+spring.datasource.driverClassName=org.h2.Driver
+spring.jpa.hibernate.ddl-auto=update
+```
