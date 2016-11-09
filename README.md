@@ -1,6 +1,6 @@
 # selenium-harness
 
-![Selenium](src/main/resources/public/modules/core/img/brand/big-logo.png)  
+![Selenium](https://github.com/savantly-net/selenium-harness/blob/master/src/main/resources/public/modules/core/img/brand/big-logo.png?raw=true)  
 
 ## Create collections [scenes] of test cases [scenarios]  
 
