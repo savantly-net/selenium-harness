@@ -2,21 +2,21 @@ package net.savantly.selenium.harness.listeners;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.server.SeleniumServer;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
-import org.springframework.context.event.ContextStoppedEvent;
-import org.springframework.stereotype.Component;
+import org.springframework.context.event.ContextClosedEvent;
 
-@Component
-public class AppListener implements ApplicationListener<ContextStoppedEvent> {
+public class AppListener implements ApplicationListener<ContextClosedEvent> {
 	
-	@Autowired
 	WebDriver webdriver;
-	@Autowired
 	SeleniumServer seleniumServer;
+	
+	public AppListener(WebDriver webdriver, SeleniumServer seleniumServer){
+		this.webdriver = webdriver;
+		this.seleniumServer = seleniumServer;
+	}
 
 	@Override
-	public void onApplicationEvent(ContextStoppedEvent event) {
+	public void onApplicationEvent(ContextClosedEvent event) {
 		webdriver.quit();
 		seleniumServer.stop();
 	}

@@ -9,6 +9,12 @@
 		</div>
 		<hr />
 		<div class="container-fluid scenario-list">
+			<div class="row">
+				<div class="col col-sm-12">
+					<span title="select all" ng-click="selectAll(true)" class="glyphicon glyphicon-check"></span> 
+					<span title="un-select all" ng-click="selectAll(false)" class="glyphicon glyphicon-unchecked"></span>
+				</div>
+			</div>
 			<div class="row" ng-class-even="'even-row'" ng-repeat="scenario in scenarios">
 				<div class="col col-sm-8 col-xs-8 shorten"><input type="checkbox" no-wrap ng-model="scenario.checked" /> {{scenario.name}}: {{scenario.description}}</div>
 				<div class="col col-sm-4 col-xs-4">

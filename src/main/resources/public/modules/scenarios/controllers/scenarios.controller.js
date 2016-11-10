@@ -93,5 +93,11 @@ angular.module('scenarios').controller('ScenariosController', ['$scope', '$rootS
 				}
 			});
 		};
+		
+		$scope.selectAll = function(value){
+			for(var i=0; i<$scope.scenarios.length; i++){
+				$scope.scenarios[i].checked = value;
+			}
+		};
 	}
 ]);
