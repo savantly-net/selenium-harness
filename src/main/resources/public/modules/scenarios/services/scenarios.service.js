@@ -9,7 +9,8 @@ angular.module('scenarios').factory('Scenarios', ['$resource', '$http',
 			},
 			execute: {
 				isArray: false,
-				url: '/scenarios/:id/execute'
+				url: '/scenarios/:id/execute',
+				method: 'POST'
 			}
 		});
 	}

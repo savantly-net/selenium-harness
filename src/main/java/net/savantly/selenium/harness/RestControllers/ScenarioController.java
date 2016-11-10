@@ -26,7 +26,7 @@ public class ScenarioController extends BaseController<ScenarioItem, ScenarioRep
 		return executor.execute(scenarioItem);
 	}
 	
-	@RequestMapping(value="/{id}/execute", method=RequestMethod.GET)
+	@RequestMapping(value="/{id}/execute", method={RequestMethod.GET, RequestMethod.POST})
 	public ScenarioResult execute(@PathVariable("id") ScenarioItem scenarioItem){
 		return executor.execute(scenarioItem);
 	}

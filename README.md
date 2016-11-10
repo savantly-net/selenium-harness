@@ -12,6 +12,8 @@ Currently the output is printed to the screen, but more API functions will be ad
 
 With some modification, this may also prove useful for an automated monitoring platform with integration endpoints for systems like Bosun or Grafana  
 
+![Scenarios](https://github.com/savantly-net/selenium-harness/blob/master/screenshots/scenarioList.PNG?raw=true)  
+
 ## Spring Boot  
 Selenium-Harness is a SpringBoot application, so you can modify the application.properties file for most settings, including the preferred DB connection.
 

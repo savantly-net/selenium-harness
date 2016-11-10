@@ -1,13 +1,14 @@
 'use strict';
 
 
-angular.module('scenarios').controller('ScenariosController', ['$scope', '$rootScope', '$stateParams', '$location', 'Authentication', 'Scenarios', 
-	function($scope, $rootScope, $stateParams, $location, Authentication, Scenarios) {
+angular.module('scenarios').controller('ScenariosController', ['$scope', '$rootScope', '$log', '$stateParams', '$location', 'Authentication', 'Scenarios', 
+	function($scope, $rootScope, $log, $stateParams, $location, Authentication, Scenarios) {
 		// This provides Authentication context.
 		$rootScope.title='Scenarios';
 		$scope.authentication = Authentication;
 		$scope.loading = [];
-		$scope.console = "";
+		$scope.console = '';
+		$scope.logs = [];
 		
 		Scenarios.query().$promise.then(function(response){
 			$scope.scenarios = response.content;
@@ -69,7 +70,12 @@ angular.module('scenarios').controller('ScenariosController', ['$scope', '$rootS
 		};
 		
 		$scope.log = function(msg){
-			$scope.console = $scope.console + '\n' + msg;
+			$scope.logs.push(msg);
+			$scope.console = angular.toJson($scope.logs, true);
+		}
+		$scope.clearLogs = function(){
+			$scope.logs = [];
+			$scope.console = angular.toJson($scope.logs, true);
 		}
 		
 		$scope.executeScenario = function(scenario){
@@ -79,9 +85,16 @@ angular.module('scenarios').controller('ScenariosController', ['$scope', '$rootS
 			Scenarios.execute(scenario).$promise.then(function(response){
 				scenario.loading = false;
 				$scope.removeLoader(loaderId);
-				var msg = 'scenario: ' + scenario.name + ' status code:' + response.httpStatusCode + ' Result: ' + response.scriptResult;
+				scenario.error = false;
+				var msg = {scenario: scenario.name, response:  response};
+				scenario.response = angular.toJson(msg, true);
 				$scope.log(msg);
-			});
+			}).catch(function(errorResponse){
+				scenario.loading = false;
+				$scope.removeLoader(loaderId);
+				scenario.error = errorResponse.data.message;
+				scenario.response = false;
+			})
 		};
 		
 		$scope.deleteScenario = function(scenario){

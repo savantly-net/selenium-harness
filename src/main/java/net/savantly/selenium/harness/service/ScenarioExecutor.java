@@ -27,14 +27,10 @@ public class ScenarioExecutor {
 
 	@Autowired
 	ApplicationContext applicationContext;
-	@Autowired
-	WebDriver driver;
 
 	public ScenarioResult execute(ScenarioItem testCase) {
 		
-
-		
-		//WebDriver driver = applicationContext.getBean(WebDriver.class);
+		WebDriver driver = applicationContext.getBean(WebDriver.class);
 		ScenarioResult result = new ScenarioResult();
 		try {
 			
@@ -52,6 +48,7 @@ public class ScenarioExecutor {
 				seTest.initialize(tempFile.getAbsolutePath(), testCase.getName(), testCase.getUrl());
 				Result seleneseResult = seleneseRunner.execute(seTest);
 				result.setScriptResult(seleneseResult);
+				tempFile.delete();
 			} else {
 				HttpURLConnection.setFollowRedirects(false);
 				HttpURLConnection con = (HttpURLConnection) new URL(testCase.getUrl()).openConnection();
@@ -65,7 +62,7 @@ public class ScenarioExecutor {
 			e.printStackTrace();
 			log.error(e.getMessage());
 		} finally {
-			//driver.quit();
+			driver.quit();
 		}
 		return result;
 	}

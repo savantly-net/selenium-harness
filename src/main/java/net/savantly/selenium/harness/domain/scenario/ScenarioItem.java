@@ -5,6 +5,7 @@ import java.util.UUID;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 
 @Entity
 public class ScenarioItem {
@@ -13,6 +14,7 @@ public class ScenarioItem {
 	@GeneratedValue
 	private UUID id;
 	private String url;
+	@Lob
 	private String script;
 	private String name;
 	private String description;
