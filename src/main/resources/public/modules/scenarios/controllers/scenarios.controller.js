@@ -6,6 +6,7 @@ angular.module('scenarios').controller('ScenariosController', ['$scope', '$rootS
 		// This provides Authentication context.
 		$rootScope.title='Scenarios';
 		$scope.authentication = Authentication;
+		$scope.$location = $location;
 		$scope.loading = [];
 		$scope.console = '';
 		$scope.logs = [];
