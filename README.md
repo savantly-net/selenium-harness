@@ -12,6 +12,11 @@ Currently the output is printed to the screen, but more API functions will be ad
 
 With some modification, this may also prove useful for an automated monitoring platform with integration endpoints for systems like Bosun or Grafana  
 
+### Scenarios
+Scenarios can be either JavaScripts or the Selenium IDE [html] scripts.  
+You can copy and paste the contents of your Selenium IDE tests by saving them as html files 
+[Selenium IDE](http://www.seleniumhq.org/docs/02_selenium_ide.jsp)
+
 ![Scenarios](https://github.com/savantly-net/selenium-harness/blob/master/screenshots/scenarioList.PNG?raw=true)  
 
 ## Spring Boot  
