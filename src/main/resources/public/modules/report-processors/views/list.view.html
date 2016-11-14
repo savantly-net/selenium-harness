@@ -1,0 +1,30 @@
+<section data-ng-controller="ReportProcessorsController">
+	<div class="btn-group pull-right" role="group" aria-label="Report Processor Operations">
+		<button type="button" class="btn btn-default" ng-click="$location.path('/reportProcessors/create')"><span title="create" class="glyphicon glyphicon-plus"></span></button>
+	</div>
+	<h1>Report Processors</h1>
+	<div>
+		<hr />
+		<div class="container-fluid">
+			<div class="row" ng-class-even="'even-row'" ng-repeat="item in items">
+				<div class="col col-sm-8 col-xs-8 shorten">
+					{{item.name}}: {{item.description}}
+				</div>
+				<div class="col col-sm-4 col-xs-4">
+					<img ng-show="item.loading" class="pull-right" height="20px" src="modules/core/img/preloaders/ellipsis.svg" />
+					<div ng-hide="item.loading" class="pull-right">
+						<a href="#!/reportProcessors/{{item.id}}/edit"><span title="edit" class="glyphicon glyphicon-pencil"></span></a>
+						<a href ng-click="duplicate(item)"><span title="duplicate" class="glyphicon glyphicon-duplicate grey"></span></a>
+						<a href ng-click="deleteScenario(item)"><span title="delete" class="glyphicon glyphicon-remove red"></span></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<hr />
+	<div>
+		<span class="lead">Log</span><a class="pull-right" href ng-click="clearLogs()"><span class="glyphicon glyphicon-erase" ></span></a>
+		<pre ng-bind="console"></pre>
+		<div ng-if="loading.length" class="text-center"><img src="modules/core/img/preloaders/gears.svg"/></div>
+	</div>
+</section>

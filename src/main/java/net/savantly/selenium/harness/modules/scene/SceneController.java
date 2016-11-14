@@ -1,4 +1,4 @@
-package net.savantly.selenium.harness.RestControllers;
+package net.savantly.selenium.harness.modules.scene;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -7,10 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import net.savantly.selenium.harness.domain.scene.SceneItem;
-import net.savantly.selenium.harness.domain.scene.SceneResult;
-import net.savantly.selenium.harness.repository.SceneRepository;
-import net.savantly.selenium.harness.service.SceneExecutor;
+import net.savantly.selenium.harness.rest.BaseController;
 
 @RestController
 @RequestMapping("/scenes")

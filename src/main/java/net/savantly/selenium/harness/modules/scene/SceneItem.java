@@ -1,4 +1,4 @@
-package net.savantly.selenium.harness.domain.scene;
+package net.savantly.selenium.harness.modules.scene;
 
 import java.util.List;
 import java.util.UUID;
@@ -6,9 +6,9 @@ import java.util.UUID;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 
-import net.savantly.selenium.harness.domain.scenario.ScenarioItem;
+import net.savantly.selenium.harness.modules.scenario.ScenarioItem;
 
 @Entity
 public class SceneItem {
@@ -18,7 +18,7 @@ public class SceneItem {
 	private UUID id;
 	private String name;
 	private String description;
-	@OneToMany
+	@ManyToMany
 	private List<ScenarioItem> scenarios;
 	
 	public UUID getId() {

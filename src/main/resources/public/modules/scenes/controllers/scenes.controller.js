@@ -7,8 +7,12 @@ angular.module('scenes').controller('ScenesController', ['$scope', '$rootScope',
 		$rootScope.title='Scenes';
 		$scope.authentication = Authentication;
 		$scope.loading = [];
-		$scope.console = "";
-		$scope.item = {scenarios:[]};
+		$scope.$location = $location;
+		$scope.item = {scenarios:[]};		
+		$scope.console = '';
+		$scope.logs = [];
+		$scope.fromJson = angular.fromJson;
+		$scope.toJson = angular.toJson;
 		
 		Scenes.query().$promise.then(function(response){
 			$scope.scenes = response.content;
@@ -44,6 +48,13 @@ angular.module('scenes').controller('ScenesController', ['$scope', '$rootScope',
 			});
 		};
 		
+		$scope.duplicate = function(scene){
+			$scope.item = scene;
+			$scope.item.id = null;
+			$scope.item.name = $scope.item.name + ' COPY';
+			$scope.save();
+		}
+		
 		$scope.addScenario = function(scenario){
 			$scope.item.scenarios.push(scenario);
 		}
@@ -56,7 +67,7 @@ angular.module('scenes').controller('ScenesController', ['$scope', '$rootScope',
 		}
 		
 		$scope.cancel = function(){
-			$location.path('scenes/');
+			$location.path('/scenes');
 		};
 		
 		$scope.executeSelectedScenes = function(){
@@ -78,7 +89,12 @@ angular.module('scenes').controller('ScenesController', ['$scope', '$rootScope',
 		};
 		
 		$scope.log = function(msg){
-			$scope.console = $scope.console + '\n' + msg;
+			$scope.logs.push(msg);
+			$scope.console = angular.toJson($scope.logs, true);
+		}
+		$scope.clearLogs = function(){
+			$scope.logs = [];
+			$scope.console = angular.toJson($scope.logs, true);
 		}
 		
 		$scope.executeScene = function(scene){
@@ -88,9 +104,33 @@ angular.module('scenes').controller('ScenesController', ['$scope', '$rootScope',
 			Scenes.execute(scene).$promise.then(function(response){
 				scene.loading = false;
 				$scope.removeLoader(loaderId);
-				var msg = 'scene: ' + scene.name + ' status code:' + response.httpStatusCode + ' Result: ' + response.scenarioResults;
+				scene.error = false;
+				var msg = {scene: scene.name, response:  response};
+				scene.response = angular.toJson(msg, true);
 				$scope.log(msg);
+			}).catch(function(errorResponse){
+				scene.loading = false;
+				$scope.removeLoader(loaderId);
+				scene.error = errorResponse.data.message;
+				scene.response = false;
 			});
 		};
+		
+		$scope.deleteScene = function(scene){
+			var _scene = new Scenes(scene);
+			_scene.$delete().then(function(response){
+				var sceneIndex = $scope.scenes.indexOf(scene);
+				if (sceneIndex > -1){
+					$scope.scenes.splice(sceneIndex, 1);
+				}
+			});
+		};
+		
+		$scope.selectAll = function(value){
+			for(var i=0; i<$scope.scenes.length; i++){
+				$scope.scenes[i].checked = value;
+			}
+		};
+		
 	}
 ]);

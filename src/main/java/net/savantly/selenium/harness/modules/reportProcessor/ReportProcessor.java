@@ -1,4 +1,4 @@
-package net.savantly.selenium.harness.domain.scenario;
+package net.savantly.selenium.harness.modules.reportProcessor;
 
 import java.util.UUID;
 
@@ -8,41 +8,22 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 
 @Entity
-public class ScenarioItem {
-
+public class ReportProcessor {
+	
 	@Id
 	@GeneratedValue
 	private UUID id;
-	private String url;
+	private String name;
 	@Lob
 	private String script;
-	private String name;
 	private String description;
-
+	
 	public UUID getId() {
 		return id;
 	}
-
 	public void setId(UUID id) {
 		this.id = id;
 	}
-
-	public String getScript() {
-		return script;
-	}
-
-	public void setScript(String script) {
-		this.script = script;
-	}
-
-	public String getUrl() {
-		return url;
-	}
-
-	public void setUrl(String url) {
-		this.url = url;
-	}
-
 	public String getName() {
 		return name;
 	}
@@ -50,11 +31,15 @@ public class ScenarioItem {
 	public void setName(String name) {
 		this.name = name;
 	}
-
+	public String getScript() {
+		return script;
+	}
+	public void setScript(String script) {
+		this.script = script;
+	}
 	public String getDescription() {
 		return description;
 	}
-
 	public void setDescription(String description) {
 		this.description = description;
 	}

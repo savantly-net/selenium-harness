@@ -9,8 +9,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import net.savantly.selenium.harness.domain.scenario.ScenarioItem;
-import net.savantly.selenium.harness.service.ScenarioExecutor;
+import net.savantly.selenium.harness.modules.scenario.ScenarioExecutor;
+import net.savantly.selenium.harness.modules.scenario.ScenarioItem;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment=WebEnvironment.RANDOM_PORT)

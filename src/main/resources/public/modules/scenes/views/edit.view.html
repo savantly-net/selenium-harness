@@ -15,16 +15,16 @@
                     </div>
                 </div>
                 
-                <div class="form-group">
+                <div class="form-group" ng-show="item.id">
                     <label class="control-label" for="scenarios">Scenarios</label>
                     <div class="controls">
-                    	<div ng-repeat="scenario in item.scenarios">
-                    		<div>{{scenario.item}} <a href="#" ng-click="removeScenario(scenario)">remove</a></div>
+                    	<div class="well">
+                    		<div ng-repeat="scenario in item.scenarios"><a href="#" ng-click="removeScenario(scenario)"><span class="glyphicon glyphicon-remove red"></span></a> {{scenario.name}}</div>
                     	</div>
                         <select name="repeatSelect" id="scenarios" ng-model="selectedScenario">
-					    	<option ng-repeat="option in availableScenarios" value="{{option}}">{{option.name}}</option>
+					    	<option ng-repeat="option in availableScenarios" ng-value="toJson(option)">{{option.name}}</option>
 					    </select>
-					    <button ng-click="addScenario(selectedScenario)" class="button" >Add</button>
+					    <button ng-click="addScenario(fromJson(selectedScenario))" class="button" >Add</button>
                     </div>
                 </div>
 

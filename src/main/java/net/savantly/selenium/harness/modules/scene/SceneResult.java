@@ -1,9 +1,9 @@
-package net.savantly.selenium.harness.domain.scene;
+package net.savantly.selenium.harness.modules.scene;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.savantly.selenium.harness.domain.scenario.ScenarioResult;
+import net.savantly.selenium.harness.modules.scenario.ScenarioResult;
 
 public class SceneResult {
 	

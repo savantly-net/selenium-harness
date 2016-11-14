@@ -1,4 +1,4 @@
-package net.savantly.selenium.harness.domain.scenario;
+package net.savantly.selenium.harness.modules.scenario;
 
 public class ScenarioResult {
 	

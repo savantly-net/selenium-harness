@@ -1,11 +1,10 @@
-package net.savantly.selenium.harness.service;
+package net.savantly.selenium.harness.modules.scene;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import net.savantly.selenium.harness.domain.scenario.ScenarioItem;
-import net.savantly.selenium.harness.domain.scene.SceneItem;
-import net.savantly.selenium.harness.domain.scene.SceneResult;
+import net.savantly.selenium.harness.modules.scenario.ScenarioExecutor;
+import net.savantly.selenium.harness.modules.scenario.ScenarioItem;
 
 @Service
 public class SceneExecutor {

@@ -1,4 +1,4 @@
-package net.savantly.selenium.harness.service;
+package net.savantly.selenium.harness.modules.scenario;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -17,8 +17,6 @@ import org.springframework.stereotype.Service;
 import jp.vmi.selenium.selenese.Runner;
 import jp.vmi.selenium.selenese.TestCase;
 import jp.vmi.selenium.selenese.result.Result;
-import net.savantly.selenium.harness.domain.scenario.ScenarioItem;
-import net.savantly.selenium.harness.domain.scenario.ScenarioResult;
 
 @Service
 public class ScenarioExecutor {
@@ -33,7 +31,7 @@ public class ScenarioExecutor {
 		WebDriver driver = applicationContext.getBean(WebDriver.class);
 		ScenarioResult result = new ScenarioResult();
 		try {
-			
+			JavascriptExecutor jsExecutor = ((JavascriptExecutor) driver);
 			if(testCase.getScript().startsWith("<?xml")){
 				Runner seleneseRunner = new Runner();
 				seleneseRunner.setDriver(driver);
@@ -55,7 +53,13 @@ public class ScenarioExecutor {
 				con.setRequestMethod("HEAD");
 				result.setHttpStatusCode(con.getResponseCode());
 				driver.get(testCase.getUrl());
-				result.setScriptResult(((JavascriptExecutor) driver).executeScript(testCase.getScript()));
+				Object scriptResult = jsExecutor.executeScript(testCase.getScript());
+				result.setScriptResult(scriptResult);
+			}
+			
+			if(testCase.getReportProcessor() != null){
+				Object finalResult = jsExecutor.executeScript(testCase.getReportProcessor().getScript(), result.getScriptResult());
+				result.setScriptResult(finalResult);
 			}
 			
 		} catch (Exception e) {

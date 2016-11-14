@@ -1,21 +1,45 @@
 <section data-ng-controller="ScenesController">
-	<div class="table-responsive">
-		<div>
-			<a href="#" ng-click="executeSelectedScenes()">Execute Selected Scenarios</a>
-		</div>
-		<table class="table">
-			<tr ng-repeat="scene in scenes">
-				<td>{{scene.name}}</td>
-				<td>{{scene.description}}</td>
-				<td><a href="#!/scenes/{{scene.id}}/edit">edit </a></td>
-				<td><a href="#" ng-click="executeScene(scene)">execute</a></td>
-				<td><input type="checkbox" ng-model="scene.checked" /></td>
-				<td><img ng-show="scene.loading" src="modules/core/img/preloaders/ellipsis.svg" /></td>
-			</tr>
-		</table>
+	<div class="btn-group pull-right" role="group" aria-label="Scene Operations">
+		<button type="button" class="btn btn-default" ng-click="selectAll(true)"><span title="select all" class="glyphicon glyphicon-check"></span></button>
+		<button type="button" class="btn btn-default" ng-click="selectAll(false)"><span title="un-select all" class="glyphicon glyphicon-unchecked"></span></button>
+		<button type="button" class="btn btn-default" ng-click="executeSelectedScenes()"><span title="execute" class="glyphicon glyphicon-play"></span></button>
+		<button type="button" class="btn btn-default" ng-click="$location.path('/scenes/create')"><span title="create" class="glyphicon glyphicon-plus"></span></button>
 	</div>
+	<h1>Scenes</h1>
 	<div>
-		<div ng-if="loading.length"><img src="modules/core/img/preloaders/gears.svg"/></div>
+		<hr />
+		<div class="container-fluid scene-list">
+			<div class="row" ng-class-even="'even-row'" ng-repeat="scene in scenes">
+				<div class="col col-sm-8 col-xs-8 shorten">
+					<input type="checkbox" no-wrap ng-model="scene.checked" />
+					<a href ng-show="scene.response" ng-click="scene.showResponse = !scene.showResponse"><span class="glyphicon glyphicon-info-sign"></span></a>
+					{{scene.name}}: {{scene.description}}
+				</div>
+				<div class="col col-sm-4 col-xs-4">
+					<img ng-show="scene.loading" class="pull-right" height="20px" src="modules/core/img/preloaders/ellipsis.svg" />
+					<div ng-hide="scene.loading" class="pull-right">
+						<a href="#!/scenes/{{scene.id}}/edit"><span title="edit" class="glyphicon glyphicon-pencil"></span></a>
+						<a href ng-click="duplicate(scene)"><span title="duplicate" class="glyphicon glyphicon-duplicate grey"></span></a>
+						<a href ng-click="executeScene(scene)"><span title="execute" class="glyphicon glyphicon-play green"></span></a>
+						<a href ng-click="deleteScene(scene)"><span title="delete" class="glyphicon glyphicon-remove red"></span></a>
+					</div>
+				</div>
+				<div class="col col-sm-12 col-xs-12 shorten text-muted">
+					<div>
+						<div ng-show="scene.showResponse" class="text-info">
+							<p>Result</p>
+							<pre ng-bind="scene.response"></pre>
+						</div>
+						<div ng-show="scene.error" ng-bind="scene.error" class="bg-danger"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<hr />
+	<div>
+		<span class="lead">Log</span><a class="pull-right" href ng-click="clearLogs()"><span class="glyphicon glyphicon-erase" ></span></a>
 		<pre ng-bind="console"></pre>
+		<div ng-if="loading.length" class="text-center"><img src="modules/core/img/preloaders/gears.svg"/></div>
 	</div>
 </section>

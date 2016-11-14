@@ -1,8 +1,8 @@
 'use strict';
 
 
-angular.module('scenarios').controller('ScenariosController', ['$scope', '$rootScope', '$log', '$stateParams', '$location', 'Authentication', 'Scenarios', 
-	function($scope, $rootScope, $log, $stateParams, $location, Authentication, Scenarios) {
+angular.module('scenarios').controller('ScenariosController', ['$scope', '$rootScope', '$log', '$stateParams', '$location', 'Authentication', 'Scenarios', 'ReportProcessors', 'notify',  
+	function($scope, $rootScope, $log, $stateParams, $location, Authentication, Scenarios, ReportProcessors, notify) {
 		// This provides Authentication context.
 		$rootScope.title='Scenarios';
 		$scope.authentication = Authentication;
@@ -10,9 +10,19 @@ angular.module('scenarios').controller('ScenariosController', ['$scope', '$rootS
 		$scope.loading = [];
 		$scope.console = '';
 		$scope.logs = [];
+		$scope.reportProcessors = [];
+		
+		notify.config({
+			duration: 3000,
+			position: 'left',
+			maximumOpen: 3
+		});
 		
 		Scenarios.query().$promise.then(function(response){
 			$scope.scenarios = response.content;
+		});
+		ReportProcessors.query().$promise.then(function(response){
+			$scope.reportProcessors = $scope.reportProcessors.concat(response.content);
 		});
 		
 		$scope.addLoader = function(id){
@@ -35,9 +45,11 @@ angular.module('scenarios').controller('ScenariosController', ['$scope', '$rootS
 			scenario.$save(function(response) {
 				$location.path('scenarios/' + response.id + '/edit');
 				$scope.removeLoader('save');
+				notify({message: 'Saved', classes: ['bg-success']});
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 				$scope.removeLoader('save');
+				notify({message: 'Failed to save', classes: ['bg-danger']});
 			});
 		};
 		
@@ -49,7 +61,7 @@ angular.module('scenarios').controller('ScenariosController', ['$scope', '$rootS
 		}
 		
 		$scope.cancel = function(){
-			$location.path('scenarios/');
+			$location.path('/scenarios');
 		};
 		
 		$scope.executeSelectedScenarios = function(){
@@ -95,7 +107,7 @@ angular.module('scenarios').controller('ScenariosController', ['$scope', '$rootS
 				$scope.removeLoader(loaderId);
 				scenario.error = errorResponse.data.message;
 				scenario.response = false;
-			})
+			});
 		};
 		
 		$scope.deleteScenario = function(scenario){
@@ -112,6 +124,10 @@ angular.module('scenarios').controller('ScenariosController', ['$scope', '$rootS
 			for(var i=0; i<$scope.scenarios.length; i++){
 				$scope.scenarios[i].checked = value;
 			}
+		};
+		
+		$scope.changeReportProcessor = function(selectedReportProcessor){
+			console.log(selectedReportProcessor);
 		};
 	}
 ]);

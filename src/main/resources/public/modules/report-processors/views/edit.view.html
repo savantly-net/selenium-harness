@@ -1,6 +1,6 @@
-<div data-ng-controller="ScenariosController" data-ng-init="findOne()">
+<div data-ng-controller="ReportProcessorsController" data-ng-init="findOne()">
 	<div class="col-md-12 container">
-        <form class="form-horizontal col-md-6" data-ng-submit="save()" novalidate>
+        <form class="form-horizontal col-md-6 pull-left" data-ng-submit="save()" novalidate>
             <fieldset>
                 <div class="form-group">
                     <label class="control-label" for="name">Name</label>
@@ -15,24 +15,9 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label" for="url">Get Url</label>
-                    <div class="controls">
-                        <input type="text" data-ng-model="item.url" id="coverImageUrl" class="form-control" placeholder="http://localhost">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label" for="script">Selenese/JavaScript</label>
+                    <label class="control-label" for="script">JavaScript</label>
                     <div class="controls">
                         <textarea data-ng-model="item.script" id="script" class="form-control" placeholder="return document.title;"></textarea>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label" for="reportProcessor">Report Processor</label>
-                    <div class="controls">
-                        <select name="reportProcessor" id="reportProcessor" ng-model="item.reportProcessor"
-                        	ng-change="changeReportProcessor(item.reportProcessor)" ng-options="option.name for option in reportProcessors track by option.id" >
-                        	<option value="">--none--</option>
-                        </select>
                     </div>
                 </div>
                 <div class="form-group">
@@ -40,7 +25,7 @@
                     <input ng-click="cancel()" class="btn btn-default" value="Cancel" />
                 </div>
                 <div>
-                	<a href="#!/scenarios">Back to List</a>
+                	<a href="#!/reportProcessors">Back to List</a>
                 </div>
 				<div data-ng-show="error" class="text-danger">
 					<strong data-ng-bind="error"></strong>

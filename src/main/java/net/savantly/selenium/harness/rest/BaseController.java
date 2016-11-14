@@ -1,4 +1,4 @@
-package net.savantly.selenium.harness.RestControllers;
+package net.savantly.selenium.harness.rest;
 
 import java.util.UUID;
 
