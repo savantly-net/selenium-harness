@@ -58,7 +58,7 @@ public class ScenarioExecutor {
 			}
 			
 			if(testCase.getReportProcessor() != null){
-				Object finalResult = jsExecutor.executeScript(testCase.getReportProcessor().getScript(), result.getScriptResult());
+				Object finalResult = jsExecutor.executeScript(testCase.getReportProcessor().getScript(), result.getScriptResult().toString());
 				result.setScriptResult(finalResult);
 			}
 			

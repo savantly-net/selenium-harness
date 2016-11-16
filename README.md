@@ -1,6 +1,6 @@
 # selenium-harness
 
-![Selenium](https://github.com/savantly-net/selenium-harness/blob/master/src/main/resources/public/modules/core/img/brand/big-logo.png?raw=true)  
+![Selenium](./src/main/resources/public/modules/core/img/brand/big-logo.png?raw=true)  
 
 ## Create collections [scenes] of test cases [scenarios]  
 
@@ -17,7 +17,21 @@ Scenarios can be either JavaScripts or the Selenium IDE [html] scripts.
 You can copy and paste the contents of your Selenium IDE tests by saving them as html files 
 [Selenium IDE](http://www.seleniumhq.org/docs/02_selenium_ide.jsp)
 
-![Scenarios](https://github.com/savantly-net/selenium-harness/blob/master/screenshots/scenarioList.PNG?raw=true)  
+![Scenarios](./screenshots/scenarioList.PNG?raw=true)  
+
+Edit Scenario  
+
+![Report Processors](./screenshots/editScenario.PNG?raw=true)  
+
+### Report Processors
+Report Processors are JavaScript function bodies that are executed in the current document context of the scenario, with the results of the scenerio passed as an argument to the processor.
+
+![Report Processors](./screenshots/editReportProcessor.PNG?raw=true)  
+
+### Scenes
+With a *Scene* you can create a playlist of scenarios.
+
+![Report Processors](./screenshots/editScene.PNG?raw=true)  
 
 ## Spring Boot  
 Selenium-Harness is a SpringBoot application, so you can modify the application.properties file for most settings, including the preferred DB connection.
