@@ -118,7 +118,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>selenium-harness.jar</finalName>
+		<finalName>selenium-harness</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
