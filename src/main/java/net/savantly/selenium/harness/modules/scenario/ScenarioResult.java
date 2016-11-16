@@ -4,6 +4,7 @@ public class ScenarioResult {
 	
 	private int httpStatusCode;
 	private Object scriptResult;
+	private boolean failed = false;
 	
 	public int getHttpStatusCode() {
 		return httpStatusCode;
@@ -16,6 +17,12 @@ public class ScenarioResult {
 	}
 	public void setScriptResult(Object scriptResult) {
 		this.scriptResult = scriptResult;
+	}
+	public boolean isFailed() {
+		return failed;
+	}
+	public void setFailed(boolean failed) {
+		this.failed = failed;
 	}
 
 }

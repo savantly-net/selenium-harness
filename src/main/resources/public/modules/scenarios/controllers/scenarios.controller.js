@@ -1,8 +1,8 @@
 'use strict';
 
 
-angular.module('scenarios').controller('ScenariosController', ['$scope', '$rootScope', '$log', '$stateParams', '$location', 'Authentication', 'Scenarios', 'ReportProcessors', 'notify',  
-	function($scope, $rootScope, $log, $stateParams, $location, Authentication, Scenarios, ReportProcessors, notify) {
+angular.module('scenarios').controller('ScenariosController', ['$scope', '$rootScope', '$filter', '$log', '$stateParams', '$location', 'Authentication', 'Scenarios', 'ReportProcessors', 'notify',  
+	function($scope, $rootScope, $filter, $log, $stateParams, $location, Authentication, Scenarios, ReportProcessors, notify) {
 		// This provides Authentication context.
 		$rootScope.title='Scenarios';
 		$scope.authentication = Authentication;
@@ -121,8 +121,9 @@ angular.module('scenarios').controller('ScenariosController', ['$scope', '$rootS
 		};
 		
 		$scope.selectAll = function(value){
-			for(var i=0; i<$scope.scenarios.length; i++){
-				$scope.scenarios[i].checked = value;
+			var filteredScenarios = $filter('filter')($scope.scenarios, $scope.searchText);
+			for(var i=0; i<filteredScenarios.length; i++){
+				filteredScenarios[i].checked = value;
 			}
 		};
 		

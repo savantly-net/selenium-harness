@@ -2,14 +2,17 @@
 	<div class="btn-group pull-right" role="group" aria-label="Scenario Operations">
 		<button type="button" class="btn btn-default" ng-click="selectAll(true)"><span title="select all" class="glyphicon glyphicon-check"></span></button>
 		<button type="button" class="btn btn-default" ng-click="selectAll(false)"><span title="un-select all" class="glyphicon glyphicon-unchecked"></span></button>
-		<button type="button" class="btn btn-default" ng-click="executeSelectedScenarios()"><span title="execute" class="glyphicon glyphicon-play"></span></button>
+		<button type="button" class="btn btn-default" ng-disabled="!(filteredScenarios | filter:{checked:true}).length > 0" ng-click="executeSelectedScenarios()"><span title="execute" class="glyphicon glyphicon-play"></span></button>
 		<button type="button" class="btn btn-default" ng-click="$location.path('/scenarios/create')"><span title="create" class="glyphicon glyphicon-plus"></span></button>
 	</div>
 	<h1>Scenarios</h1>
 	<div>
+		<div>
+			<label>Search: <input ng-model="searchText"></label>
+		</div>
 		<hr />
 		<div class="container-fluid scenario-list">
-			<div class="row" ng-class-even="'even-row'" ng-repeat="scenario in scenarios">
+			<div class="row" ng-class-even="'even-row'" ng-repeat="scenario in filteredScenarios = (scenarios | filter:searchText)">
 				<div class="col col-sm-8 col-xs-8 shorten">
 					<input type="checkbox" no-wrap ng-model="scenario.checked" />
 					<a href ng-show="scenario.response" ng-click="scenario.showResponse = !scenario.showResponse"><span class="glyphicon glyphicon-info-sign"></span></a>

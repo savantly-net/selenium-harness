@@ -65,6 +65,7 @@ public class ScenarioExecutor {
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.error(e.getMessage());
+			result.setFailed(true);
 		} finally {
 			driver.quit();
 		}
