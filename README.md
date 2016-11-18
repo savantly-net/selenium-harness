@@ -1,4 +1,5 @@
 # selenium-harness
+[![Build Status](https://travis-ci.org/savantly-net/selenium-harness.svg?branch=master)](https://travis-ci.org/savantly-net/selenium-harness)
 
 ![Selenium](./src/main/resources/public/modules/core/img/brand/big-logo.png?raw=true)  
 
