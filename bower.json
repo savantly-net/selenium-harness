@@ -1,5 +1,5 @@
 {
-  "name": "Selenium Harness",
+  "name": "selenium-harness",
   "version": "0.0.1",
   "description": "A Test Harness for Selenium",
   "dependencies": {
