@@ -1,0 +1,19 @@
+{
+  "name": "selenium-harness",
+  "version": "1.0.0",
+  "description": "[![Build Status](https://travis-ci.org/savantly-net/selenium-harness.svg?branch=master)](https://travis-ci.org/savantly-net/selenium-harness)",
+  "scripts": {
+	"build": "bower install",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/savantly-net/selenium-harness.git"
+  },
+  "author": "Jeremy Branham",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/savantly-net/selenium-harness/issues"
+  },
+  "homepage": "https://github.com/savantly-net/selenium-harness#readme"
+}
