@@ -5,6 +5,10 @@
 
 [Demo Site](https://selenium-harness.herokuapp.com/)  
 
+[Get the source!](https://github.com/savantly-net/selenium-harness)  
+
+[Continuous Integration](https://travis-ci.org/savantly-net/selenium-harness) 
+
 ## Build  
 pre-requisites
 * nodejs, bower, maven, java
