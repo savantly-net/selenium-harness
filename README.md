@@ -3,6 +3,8 @@
 
 ![Selenium](./src/main/resources/public/modules/core/img/brand/big-logo.png?raw=true)  
 
+[Demo Site](https://selenium-harness.herokuapp.com/)  
+
 ## Build  
 pre-requisites
 * nodejs, bower, maven, java
