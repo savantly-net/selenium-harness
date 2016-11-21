@@ -157,6 +157,7 @@
 				<version>1.4.1</version>
 				<executions>
 					<execution>
+						<phase>resources</phase>
 						<goals>
 							<goal>npm</goal>
 							<goal>grunt</goal>
