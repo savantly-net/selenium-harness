@@ -125,9 +125,6 @@
 					<family>Windows</family>
 				</os>
 			</activation>
-			<properties>
-				<bower.exec>bower.cmd</bower.exec>
-			</properties>
 		</profile>
 		<profile>
 			<id>linux-build</id>
@@ -136,9 +133,6 @@
 					<family>Linux</family>
 				</os>
 			</activation>
-			<properties>
-				<bower.exec>bower</bower.exec>
-			</properties>
 		</profile>
 	</profiles>
 
@@ -158,59 +152,18 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>exec-maven-plugin</artifactId>
-				<configuration>
-					<executable>${bower.exec}</executable>
-					<arguments>
-						<argument>install</argument>
-					</arguments>
-				</configuration>
+				<groupId>pl.allegro</groupId>
+				<artifactId>grunt-maven-plugin</artifactId>
+				<version>1.4.1</version>
 				<executions>
 					<execution>
-						<phase>generate-sources</phase>
 						<goals>
-							<goal>exec</goal>
+							<goal>npm</goal>
+							<goal>grunt</goal>
 						</goals>
 					</execution>
 				</executions>
 			</plugin>
 		</plugins>
-		<pluginManagement>
-			<plugins>
-				<!--This plugin's configuration is used to store Eclipse m2e settings 
-					only. It has no influence on the Maven build itself. -->
-				<plugin>
-					<groupId>org.eclipse.m2e</groupId>
-					<artifactId>lifecycle-mapping</artifactId>
-					<version>1.0.0</version>
-					<configuration>
-						<lifecycleMappingMetadata>
-							<pluginExecutions>
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>
-											org.codehaus.mojo
-										</groupId>
-										<artifactId>
-											exec-maven-plugin
-										</artifactId>
-										<versionRange>
-											[1.5.0,)
-										</versionRange>
-										<goals>
-											<goal>exec</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<ignore></ignore>
-									</action>
-								</pluginExecution>
-							</pluginExecutions>
-						</lifecycleMappingMetadata>
-					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
 	</build>
 </project>
