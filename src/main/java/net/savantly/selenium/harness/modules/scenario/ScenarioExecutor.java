@@ -11,26 +11,34 @@ import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import jp.vmi.selenium.selenese.Runner;
 import jp.vmi.selenium.selenese.TestCase;
 import jp.vmi.selenium.selenese.result.Result;
+import net.savantly.selenium.harness.config.PhantomJsConfiguration;
 
 @Service
+@Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class ScenarioExecutor {
 
 	private static final Logger log = LoggerFactory.getLogger(ScenarioExecutor.class);
 
 	@Autowired
-	ApplicationContext applicationContext;
+	PhantomJsConfiguration phantomJsConfiguration;
+	@Autowired 
+	@Qualifier("sHarness")
+	String sHarness;
 
 	public ScenarioResult execute(ScenarioItem testCase) {
 		
-		WebDriver driver = applicationContext.getBean(WebDriver.class);
+		WebDriver driver = null;
 		ScenarioResult result = new ScenarioResult();
 		try {
+			driver = phantomJsConfiguration.getWebDriver();
 			JavascriptExecutor jsExecutor = ((JavascriptExecutor) driver);
 			if(testCase.getScript().startsWith("<?xml")){
 				Runner seleneseRunner = new Runner();
@@ -53,6 +61,9 @@ public class ScenarioExecutor {
 				con.setRequestMethod("HEAD");
 				result.setHttpStatusCode(con.getResponseCode());
 				driver.get(testCase.getUrl());
+				// Add sHarness object to global scope for tests.
+				// Header keys and values are made available in the sHarness object for the tests and report processors
+				jsExecutor.executeScript(sHarness, con.getResponseCode(), con.getHeaderFields().keySet(), con.getHeaderFields().values());
 				Object scriptResult = jsExecutor.executeScript(testCase.getScript());
 				result.setScriptResult(scriptResult);
 			}
@@ -65,9 +76,12 @@ public class ScenarioExecutor {
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.error(e.getMessage());
+			result.setScriptResult(e.getMessage());
 			result.setFailed(true);
 		} finally {
-			driver.quit();
+			if(driver != null){
+				driver.quit();
+			}
 		}
 		return result;
 	}

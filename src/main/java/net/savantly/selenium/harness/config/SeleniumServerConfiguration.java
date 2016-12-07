@@ -4,12 +4,15 @@ import javax.annotation.PostConstruct;
 
 //import org.openqa.grid.internal.utils.configuration.StandaloneConfiguration;
 import org.openqa.selenium.remote.server.SeleniumServer;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 
 @Configuration
 @ConfigurationProperties(prefix="selenium.server")
+@Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class SeleniumServerConfiguration {
 
 	//private StandaloneConfiguration serverConfig = new StandaloneConfiguration();
@@ -23,9 +26,13 @@ public class SeleniumServerConfiguration {
 	private int timeout;
 	private boolean enabled;
 	private SeleniumServer seleniumServer;
+	private boolean started = false;
 	
 	@PostConstruct
-	private SeleniumServer startSeleniumServer() {
+	private void startSeleniumServer() {
+		if(started){
+			throw new RuntimeException("Embedded Selenium Server is already started.");
+		}
 /*		serverConfig.browserTimeout = browserTimeout;
 		serverConfig.debug = debug;
 		serverConfig.help = help;
@@ -41,10 +48,10 @@ public class SeleniumServerConfiguration {
 	    	seleniumServer.setSessionTimeout(timeout);
 	    	seleniumServer.setThreadCount(jettyMaxThreads);
 	    	seleniumServer.boot();
+	    	started = true;
 	    } catch (Exception e) {
-	        throw new IllegalArgumentException("Failed to start embedded Selenium Server",e);
+	        throw new IllegalArgumentException("Failed to start embedded Selenium Server", e);
 	    }
-	    return seleniumServer;
 	}
 	
 	@Bean

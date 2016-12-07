@@ -1,6 +1,7 @@
 package net.savantly.selenium.harness.config;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -10,31 +11,35 @@ import org.openqa.selenium.phantomjs.PhantomJSDriverService;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Scope;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.util.FileCopyUtils;
 
 import net.anthavio.phanbedder.Phanbedder;
 
 @Configuration
+@ConfigurationProperties(prefix="phantomjs")
 public class PhantomJsConfiguration {
 	private static File phantomjs = Phanbedder.unpack();
 	public static final String PHANTOM_EXEC_PATH = phantomjs.getAbsolutePath();
 	
 	@Autowired
 	SeleniumServerConfiguration seleniumServerConfig;
-	@Value("${phantomjs.selenium-hub}")
 	private String seleniumHubHost;
-	@Value("${phantomjs.selenium-hub-port}")
 	private String seleniumHubPort;
 	
 
 	private Capabilities capability;
 	
-	@Bean
-	@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+	@Bean(name="sHarness")
+	public String sHarness() throws IOException{
+		ClassPathResource sHarnessResource = new ClassPathResource("/js/sHarness.js");
+		byte[] contents = FileCopyUtils.copyToByteArray(sHarnessResource.getFile());
+		return new String(contents);
+	};
+	
 	public WebDriver getWebDriver() throws MalformedURLException{
 		DesiredCapabilities desiredCaps = new DesiredCapabilities();
 		desiredCaps.merge(capability);
@@ -72,6 +77,22 @@ public class PhantomJsConfiguration {
         //WebDriver driver = new PhantomJSDriver(desiredCaps);
 		WebDriver driver = new RemoteWebDriver(new URL(seleniumHub + "/wd/hub"), desiredCaps);
 		return driver;
+	}
+
+	public String getSeleniumHubHost() {
+		return seleniumHubHost;
+	}
+
+	public void setSeleniumHubHost(String seleniumHubHost) {
+		this.seleniumHubHost = seleniumHubHost;
+	}
+
+	public String getSeleniumHubPort() {
+		return seleniumHubPort;
+	}
+
+	public void setSeleniumHubPort(String seleniumHubPort) {
+		this.seleniumHubPort = seleniumHubPort;
 	}
 
 }

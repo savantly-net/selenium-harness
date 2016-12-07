@@ -1,8 +1,9 @@
 'use strict';
 
 
-angular.module('scenarios').controller('ScenariosController', ['$scope', '$rootScope', '$filter', '$log', '$stateParams', '$location', 'Authentication', 'Scenarios', 'ReportProcessors', 'notify',  
-	function($scope, $rootScope, $filter, $log, $stateParams, $location, Authentication, Scenarios, ReportProcessors, notify) {
+angular.module('scenarios').controller('ScenariosController', 
+		['$scope', '$rootScope', '$filter', '$log', '$stateParams', '$location', 'Authentication', 'Scenarios', 'ReportProcessors', 'TestAggregator', 'notify',  
+	function($scope, $rootScope, $filter, $log, $stateParams, $location, Authentication, Scenarios, ReportProcessors, TestAggregator, notify) {
 		// This provides Authentication context.
 		$rootScope.title='Scenarios';
 		$scope.authentication = Authentication;
@@ -11,6 +12,7 @@ angular.module('scenarios').controller('ScenariosController', ['$scope', '$rootS
 		$scope.console = '';
 		$scope.logs = [];
 		$scope.reportProcessors = [];
+		$scope.showLog = false;
 		
 		notify.config({
 			duration: 3000,
@@ -101,6 +103,7 @@ angular.module('scenarios').controller('ScenariosController', ['$scope', '$rootS
 				scenario.error = false;
 				var msg = {scenario: scenario.name, response:  response};
 				scenario.response = angular.toJson(msg, true);
+				scenario.passed = TestAggregator.didPass(response);
 				$scope.log(msg);
 			}).catch(function(errorResponse){
 				scenario.loading = false;

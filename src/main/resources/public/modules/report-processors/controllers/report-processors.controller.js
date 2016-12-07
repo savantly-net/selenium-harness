@@ -55,6 +55,15 @@ angular.module('reportProcessors').controller('ReportProcessorsController', ['$s
 			$location.path('/reportProcessors');
 		};
 		
+		$scope.deleteOne = function(one){
+			var _one = new ReportProcessors(one);
+			_one.$delete().then(function(response){
+				var itemIndex = $scope.items.indexOf(one);
+				if (itemIndex > -1){
+					$scope.items.splice(itemIndex, 1);
+				}
+			});
+		};
 		
 		// Find existing item
 		$scope.findOne = function() {

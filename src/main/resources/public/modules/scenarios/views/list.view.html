@@ -15,7 +15,8 @@
 			<div class="row" ng-class-even="'even-row'" ng-repeat="scenario in filteredScenarios = (scenarios | filter:searchText)">
 				<div class="col col-sm-8 col-xs-8 shorten">
 					<input type="checkbox" no-wrap ng-model="scenario.checked" />
-					<a href ng-show="scenario.response" ng-click="scenario.showResponse = !scenario.showResponse"><span class="glyphicon glyphicon-info-sign"></span></a>
+					<a href ng-show="scenario.response" ng-click="scenario.showResponse = !scenario.showResponse">
+					<span class="glyphicon glyphicon-info-sign"  ng-class="{'text-success': scenario.passed, 'text-danger': scenario.error || !scenario.passed}"></span></a>
 					{{scenario.name}}: {{scenario.description}}
 				</div>
 				<div class="col col-sm-4 col-xs-4">
@@ -42,8 +43,8 @@
 	</div>
 	<hr />
 	<div>
-		<span class="lead">Log</span><a class="pull-right" href ng-click="clearLogs()"><span class="glyphicon glyphicon-erase" ></span></a>
-		<pre ng-bind="console"></pre>
+		<span class="lead">Log <a href ng-click="showLog = !showLog">...</a></span><a class="pull-right" href ng-click="clearLogs()"><span class="glyphicon glyphicon-erase" ></span></a>
+		<div ng-show="showLog"><pre ng-bind="console"></pre></div>
 		<div ng-if="loading.length" class="text-center"><img src="modules/core/img/preloaders/gears.svg"/></div>
 	</div>
 </section>

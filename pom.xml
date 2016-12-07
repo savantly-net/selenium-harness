@@ -80,6 +80,12 @@
 			<artifactId>h2</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>net.savantly</groupId>
+			<artifactId>spring-fixtures</artifactId>
+			<version>0.0.1-RELEASE</version>
+		</dependency>
+
 
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
