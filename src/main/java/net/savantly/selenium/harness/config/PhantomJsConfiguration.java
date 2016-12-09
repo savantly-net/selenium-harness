@@ -16,6 +16,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.util.FileCopyUtils;
+import org.springframework.util.ResourceUtils;
 
 import net.anthavio.phanbedder.Phanbedder;
 
@@ -35,8 +36,9 @@ public class PhantomJsConfiguration {
 	
 	@Bean(name="sHarness")
 	public String sHarness() throws IOException{
-		ClassPathResource sHarnessResource = new ClassPathResource("/js/sHarness.js");
-		byte[] contents = FileCopyUtils.copyToByteArray(sHarnessResource.getInputStream());
+		//ClassPathResource sHarnessResource = new ClassPathResource("/js/sHarness.js");
+		File resourceFile = ResourceUtils.getFile(new ClassPathResource("/js/sHarness.js").getURL());
+		byte[] contents = FileCopyUtils.copyToByteArray(resourceFile);
 		return new String(contents);
 	};
 	
