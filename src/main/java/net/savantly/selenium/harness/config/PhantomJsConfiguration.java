@@ -1,7 +1,6 @@
 package net.savantly.selenium.harness.config;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -12,11 +11,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.util.FileCopyUtils;
-import org.springframework.util.ResourceUtils;
 
 import net.anthavio.phanbedder.Phanbedder;
 
@@ -33,14 +28,6 @@ public class PhantomJsConfiguration {
 	
 
 	private Capabilities capability;
-	
-	@Bean(name="sHarness")
-	public String sHarness() throws IOException{
-		//ClassPathResource sHarnessResource = new ClassPathResource("/js/sHarness.js");
-		File resourceFile = ResourceUtils.getFile(new ClassPathResource("/js/sHarness.js").getURL());
-		byte[] contents = FileCopyUtils.copyToByteArray(resourceFile);
-		return new String(contents);
-	};
 	
 	public WebDriver getWebDriver() throws MalformedURLException{
 		DesiredCapabilities desiredCaps = new DesiredCapabilities();
