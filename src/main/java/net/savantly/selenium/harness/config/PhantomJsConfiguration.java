@@ -36,7 +36,7 @@ public class PhantomJsConfiguration {
 	@Bean(name="sHarness")
 	public String sHarness() throws IOException{
 		ClassPathResource sHarnessResource = new ClassPathResource("/js/sHarness.js");
-		byte[] contents = FileCopyUtils.copyToByteArray(sHarnessResource.getFile());
+		byte[] contents = FileCopyUtils.copyToByteArray(sHarnessResource.getInputStream());
 		return new String(contents);
 	};
 	

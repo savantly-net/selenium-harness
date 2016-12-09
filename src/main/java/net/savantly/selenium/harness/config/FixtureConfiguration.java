@@ -31,7 +31,7 @@ public class FixtureConfiguration {
 	@Bean(name="exampleSelenese")
 	public String sHarness() throws IOException{
 		ClassPathResource resource = new ClassPathResource("/examples/selenese.html");
-		byte[] contents = FileCopyUtils.copyToByteArray(resource.getFile());
+		byte[] contents = FileCopyUtils.copyToByteArray(resource.getInputStream());
 		return new String(contents);
 	};
 
