@@ -25,6 +25,11 @@ public class ResourceConfiguration {
 		return getResourceContents("/js/sHarness.js");
 	};
 	
+	@Bean(name="sHarnessAPI")
+	public String sHarnessAPI() throws IOException{
+		return getResourceContents("/public/modules/global/sHarnessAPI.js");
+	};
+	
 	@Bean(name="exampleSelenese")
 	public String exampleSelenese() throws IOException{
 		return getResourceContents("/examples/selenese.html");

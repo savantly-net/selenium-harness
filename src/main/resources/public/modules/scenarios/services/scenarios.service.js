@@ -11,6 +11,11 @@ angular.module('scenarios').factory('Scenarios', ['$resource', '$http',
 				isArray: false,
 				url: '/scenarios/:id/execute',
 				method: 'POST'
+			},
+			test: {
+				isArray: false,
+				url: '/scenarios/test',
+				method: 'POST'
 			}
 		});
 	}

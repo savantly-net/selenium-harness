@@ -2,8 +2,8 @@
 
 
 angular.module('scenarios').controller('ScenariosController', 
-		['$scope', '$rootScope', '$filter', '$log', '$stateParams', '$location', 'Authentication', 'Scenarios', 'ReportProcessors', 'TestAggregator', 'notify',  
-	function($scope, $rootScope, $filter, $log, $stateParams, $location, Authentication, Scenarios, ReportProcessors, TestAggregator, notify) {
+		['$scope', '$rootScope', '$filter', '$log', '$stateParams', '$location', '$mdDialog', '$mdToast', 'Authentication', 'Scenarios', 'ReportProcessors', 'TestAggregator',   
+	function($scope, $rootScope, $filter, $log, $stateParams, $location, $mdDialog, $mdToast, Authentication, Scenarios, ReportProcessors, TestAggregator) {
 		// This provides Authentication context.
 		$rootScope.title='Scenarios';
 		$scope.authentication = Authentication;
@@ -14,11 +14,21 @@ angular.module('scenarios').controller('ScenariosController',
 		$scope.reportProcessors = [];
 		$scope.showLog = false;
 		
-		notify.config({
-			duration: 3000,
-			position: 'left',
-			maximumOpen: 3
-		});
+		var executionSuccessHandler = function(response){
+			this.loading = false;
+			$scope.removeLoader(this.loaderId);
+			this.error = false;
+			var msg = {scenario: this.name, response: response};
+			this.response = angular.toJson(msg, true);
+			this.passed = TestAggregator.didPass(response);
+			$scope.log(msg);
+		};
+		var executionFailedHandler = function(errorResponse){
+			this.scenario.loading = false;
+			$scope.removeLoader(this.loaderId);
+			this.scenario.error = errorResponse.data.message;
+			this.scenario.response = false;
+		};
 		
 		Scenarios.query().$promise.then(function(response){
 			$scope.scenarios = response.content;
@@ -47,11 +57,14 @@ angular.module('scenarios').controller('ScenariosController',
 			scenario.$save(function(response) {
 				$location.path('scenarios/' + response.id + '/edit');
 				$scope.removeLoader('save');
-				notify({message: 'Saved', classes: ['bg-success']});
+				$mdToast.show($mdToast.simple().textContent('Saved'));
 			}, function(errorResponse) {
-				$scope.error = errorResponse.data.message;
+				if(errorResponse.data && errorResponse.data.message){
+					$scope.error = errorResponse.data.message;
+				} else {
+					$scope.error = 'Request Failed';	
+				}
 				$scope.removeLoader('save');
-				notify({message: 'Failed to save', classes: ['bg-danger']});
 			});
 		};
 		
@@ -95,31 +108,33 @@ angular.module('scenarios').controller('ScenariosController',
 		
 		$scope.executeScenario = function(scenario){
 			scenario.loading = true;
-			var loaderId = 'execute-' + scenario.name;
-			$scope.addLoader(loaderId);
-			Scenarios.execute(scenario).$promise.then(function(response){
-				scenario.loading = false;
-				$scope.removeLoader(loaderId);
-				scenario.error = false;
-				var msg = {scenario: scenario.name, response:  response};
-				scenario.response = angular.toJson(msg, true);
-				scenario.passed = TestAggregator.didPass(response);
-				$scope.log(msg);
-			}).catch(function(errorResponse){
-				scenario.loading = false;
-				$scope.removeLoader(loaderId);
-				scenario.error = errorResponse.data.message;
-				scenario.response = false;
-			});
+			scenario.loaderId = 'execute-' + scenario.name;
+			$scope.addLoader(scenario.loaderId);
+			Scenarios.execute(scenario).$promise
+				.then(executionSuccessHandler.bind(scenario)).catch(executionFailedHandler.bind(scenario));
+		};
+		
+		$scope.testScenario = function(scenario){
+			scenario.loading = true;
+			scenario.loaderId = 'execute-' + scenario.name;
+			$scope.addLoader(scenario.loaderId);
+			Scenarios.test(scenario).$promise
+				.then(executionSuccessHandler.bind(scenario)).catch(executionFailedHandler.bind(scenario));
 		};
 		
 		$scope.deleteScenario = function(scenario){
-			var _scenario = new Scenarios(scenario);
-			_scenario.$delete().then(function(response){
-				var scenarioIndex = $scope.scenarios.indexOf(scenario);
-				if (scenarioIndex > -1){
-					$scope.scenarios.splice(scenarioIndex, 1);
-				}
+			var dialog = $mdDialog.confirm().title('Delete Scenario')
+				.textContent('Are you sure you want to delete "'+ scenario.name +'"?')
+				.ok('Delete')
+				.cancel('Cancel');
+			$mdDialog.show(dialog).then(function(){
+				var _scenario = new Scenarios(scenario);
+				_scenario.$delete().then(function(response){
+					var scenarioIndex = $scope.scenarios.indexOf(scenario);
+					if (scenarioIndex > -1){
+						$scope.scenarios.splice(scenarioIndex, 1);
+					}
+				});
 			});
 		};
 		

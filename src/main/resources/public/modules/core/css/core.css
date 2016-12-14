@@ -2,7 +2,7 @@
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
 
 .content {
-	margin-top: 60px;
+	padding-top: 60px;
 }
 .undecorated-link:hover {
 	text-decoration: none;
@@ -18,7 +18,7 @@
 }
 
 a span.glyphicon {
-	font-size: 1.2em;
+	font-size: 1.5em;
 }
 
 .blue{

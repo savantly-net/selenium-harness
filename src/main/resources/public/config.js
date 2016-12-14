@@ -4,7 +4,7 @@
 var ApplicationConfiguration = (function() {
 	// Init module configuration options
 	var applicationModuleName = 'seleniumHarness';
-	var applicationModuleVendorDependencies = ['ngResource', 'ngCookies',  'ngAnimate',  'ngTouch',  'ngSanitize',  'ui.router', 'ui.bootstrap', 'ui.utils', 'ui.validate'];
+	var applicationModuleVendorDependencies = ['ngMaterial', 'ngAria', 'ngResource', 'ngCookies',  'ngAnimate',  'ngSanitize',  'ui.router', 'ui.bootstrap', 'ui.utils', 'ui.validate'];
 
 	// Add a new vertical module
 	var registerModule = function(moduleName, dependencies) {
