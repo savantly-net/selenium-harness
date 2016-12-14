@@ -7,9 +7,10 @@ import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Value;
 
+import net.savantly.graphite.CarbonFactory;
 import net.savantly.graphite.CarbonMetric;
 import net.savantly.graphite.GraphiteClient;
-import net.savantly.graphite.GraphiteClientFactory;
+import net.savantly.graphite.impl.DefaultGraphiteClient;
 import net.savantly.graphite.impl.SimpleCarbonMetric;
 import net.savantly.selenium.harness.modules.scenario.ScenarioListener;
 import net.savantly.selenium.harness.modules.scenario.ScenarioResult;
@@ -24,7 +25,7 @@ public class GraphiteScenarioListener implements ScenarioListener{
 	
 	@PostConstruct
 	public void post() throws UnknownHostException, SocketException{
-		graphiteClient = GraphiteClientFactory.defaultGraphiteClient(graphiteHost);
+		graphiteClient = new DefaultGraphiteClient(CarbonFactory.getDefaultCarbonSender(graphiteHost, 2003, "0.0.0.0"));
 	}
 
 	@Override
