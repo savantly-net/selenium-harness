@@ -46,6 +46,12 @@ With a *Scene* you can create a playlist of scenarios.
 
 ![Report Processors](./screenshots/editScene.PNG?raw=true)  
 
+### ScenarioListener  
+Java Beans can be added at run-time to do post processing by implementing [ScenarioListener](./src/main/java/net/savantly/selenium/harness/modules/scenario/ScenarioListener.java)  
+An included Graphite processor emits Pass/Fail statistics for each test case thats run.  
+
+![Grafana](./screenshots/GraphiteIntegration.PNG?raw=true)  
+
 ## Spring Boot  
 Selenium-Harness is a SpringBoot application, so you can modify the application.properties file for most settings, including the preferred DB connection.
 
@@ -53,31 +59,31 @@ Selenium-Harness is a SpringBoot application, so you can modify the application.
 
 ## Properties 
 
-    ##### Servlet
+    ### Servlet
     server.port=3030
     server.contextPath=/
 	
-	##### for pretty printing of json when endpoints accessed over HTTP
+	### for pretty printing of json when endpoints accessed over HTTP
 	http.mappers.jsonPrettyPrint=true
 	
-	##### Configuring info endpoint using maven properties
+	### Configuring info endpoint using maven properties
 	info.app.name=@project.name@
 	info.app.description=@project.description@
 	info.app.version=@project.version@
 	
-	##### Security
+	### Security
 	security.user.password=password
 	
-	##### Embedded Selenium Server 
+	### Embedded Selenium Server 
 	selenium.server.port=4444
 	selenium.server.debug=true
 	selenium.server.enabled=true
 	
-	##### Have PhantomJS Use embedded Selenium Server by default
+	### Have PhantomJS Use embedded Selenium Server by default
 	phantomjs.selenium-hub=127.0.0.1
 	phantomjs.selenium-hub-port=4444
 	
-	##### Datasource for Test Case persistence
+	### Datasource for Test Case persistence
 	spring.h2.console.enabled=true
 	spring.datasource.url=jdbc:h2:~/db/selenium-harness;DB_CLOSE_ON_EXIT=FALSE
 	spring.datasource.username=sa
@@ -85,4 +91,15 @@ Selenium-Harness is a SpringBoot application, so you can modify the application.
 	spring.datasource.driverClassName=org.h2.Driver
 	spring.jpa.hibernate.ddl-auto=update
 
+	### Scenario Listeners
+	savantly.listener.packages=net.savantly.selenium.harness.listeners.graphite
+	
+	### Graphite Configuration
+	graphite.host=127.0.0.1
+	graphite.metric.prefix=sharness
+	
+	### Fixtures
+	savantly.fixtures=true
+	savantly.fixtures.reportProcessor=true
+	savantly.fixtures.scenario=true
 	
