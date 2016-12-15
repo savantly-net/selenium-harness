@@ -35,21 +35,22 @@ public class ScenarioControllerTest {
 		ScenarioItem stest = new ScenarioItem();
 		stest.setUrl("https://google.com");
 		stest.setScript("return document.title");
+		stest.addTag("testing tag");
 		stest.setName("Test1");
 		ResponseEntity<ScenarioItem> response = this.restTemplate.postForEntity("/scenarios/", stest, ScenarioItem.class);
 		
 		Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
+		Assert.assertNotNull(response.getBody().getId());
 		Assert.assertEquals(stest.getName(), response.getBody().getName());
 		Assert.assertEquals(stest.getUrl(), response.getBody().getUrl());
 		Assert.assertEquals(stest.getScript(), response.getBody().getScript());
+		Assert.assertEquals(stest.getTags().size(), response.getBody().getTags().size());
 		
-		// Update Name and id
+		// Update Name
 		stest.setName("NewTestName");
-		stest.setId(response.getBody().getId());
 		
 		ResponseEntity<ScenarioItem> newResponse = this.restTemplate.postForEntity("/scenarios/", stest, ScenarioItem.class);		
 		Assert.assertEquals("NewTestName", newResponse.getBody().getName());
-		
 	}
 	
 	@Test
@@ -61,16 +62,18 @@ public class ScenarioControllerTest {
 		stest.setUrl("https://google.com");
 		stest.setScript(selenese);
 		stest.setName("Selenese Test");
+		stest.addTag("testing tag", "another test");
 		ResponseEntity<ScenarioItem> response = this.restTemplate.postForEntity("/scenarios/", stest, ScenarioItem.class);
 		
 		Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
+		Assert.assertNotNull(response.getBody().getId());
 		Assert.assertEquals(stest.getName(), response.getBody().getName());
 		Assert.assertEquals(stest.getUrl(), response.getBody().getUrl());
 		Assert.assertEquals(stest.getScript(), response.getBody().getScript());
+		Assert.assertEquals(stest.getTags().size(), response.getBody().getTags().size());
 		
-		// Update Name and id
+		// Update Name
 		stest.setName("Updated Selenese Test");
-		stest.setId(response.getBody().getId());
 		
 		ResponseEntity<ScenarioItem> newResponse = this.restTemplate.postForEntity("/scenarios/", stest, ScenarioItem.class);		
 		Assert.assertEquals("Updated Selenese Test", newResponse.getBody().getName());

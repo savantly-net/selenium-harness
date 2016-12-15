@@ -1,5 +1,8 @@
 package net.savantly.selenium.harness.modules.scenario;
 
+import javax.transaction.Transactional;
+import javax.transaction.Transactional.TxType;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,6 +14,7 @@ import net.savantly.selenium.harness.rest.BaseController;
 
 @RestController
 @RequestMapping("/scenarios")
+@Transactional(value=TxType.REQUIRES_NEW)
 public class ScenarioController extends BaseController<ScenarioItem, ScenarioRepository>{
 	
 	@Autowired

@@ -1,21 +1,22 @@
 package net.savantly.selenium.harness.modules.scenario;
 
-import java.util.UUID;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.FetchType;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
+import net.savantly.selenium.harness.modules.PersistedModule;
 import net.savantly.selenium.harness.modules.reportProcessor.ReportProcessor;
+import net.savantly.selenium.harness.modules.tag.Tag;
 
 @Entity
-public class ScenarioItem {
+public class ScenarioItem extends PersistedModule {
 
-	@Id
-	@GeneratedValue
-	private UUID id;
+	private static final long serialVersionUID = 2140552210097962111L;
 	private String url;
 	@Lob
 	private String script;
@@ -23,14 +24,8 @@ public class ScenarioItem {
 	private String description;
 	@ManyToOne
 	private ReportProcessor reportProcessor;
-
-	public UUID getId() {
-		return id;
-	}
-
-	public void setId(UUID id) {
-		this.id = id;
-	}
+	@ManyToMany(fetch=FetchType.EAGER)
+	private Set<Tag> tags = new HashSet<>();
 
 	public String getScript() {
 		return script;
@@ -70,6 +65,20 @@ public class ScenarioItem {
 
 	public void setReportProcessor(ReportProcessor reportProcessor) {
 		this.reportProcessor = reportProcessor;
+	}
+	
+	public void addTag(String... tag){
+		for (String tag2 : tag) {
+			addTag(tag2);
+		}
+	}
+	
+	public void addTag(String tag){
+		this.tags.add(new Tag(tag));
+	}
+	
+	public Set<Tag> getTags(){
+		return this.tags;
 	}
 
 }

@@ -37,6 +37,11 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label class="control-label" for="tags">Tags</label>
+            		<tags-input data-ng-model="item.tags" id="tags"></tags-input>
+                </div>
+                
+                <div class="form-group">
                     <input type="submit" class="btn btn-primary" value="Apply" />
                     <input ng-click="testScenario(item)" type="button" class="btn btn-default" value="Test" />
                     <input ng-click="cancel()" class="btn btn-default" value="Return to List" />
@@ -47,6 +52,7 @@
 				</div>
             </fieldset>
         </form>
+        
         <div class="col-md-6">
            	<div ng-if="loading.length" class="text-center"><img src="modules/core/img/preloaders/gears.svg"/></div>
 			<div ng-show="item.response && !item.loading" class="text-info">

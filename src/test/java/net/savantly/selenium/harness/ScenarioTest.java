@@ -2,6 +2,7 @@ package net.savantly.selenium.harness;
 
 import java.io.IOException;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,7 @@ public class ScenarioTest {
 		testCase.setScript("return document.documentElement.innerText;");
 		Object result = executor.execute(testCase);
 		System.out.println(result);
+		Assert.assertNotNull(result);
 	}
 	
 	@Test
@@ -41,6 +43,7 @@ public class ScenarioTest {
 		testCase.setScript(selenese);
 		Object result = executor.execute(testCase);
 		System.out.println(result);
+		Assert.assertNotNull(result);
 	}
 
 

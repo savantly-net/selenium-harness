@@ -5,7 +5,7 @@ import java.util.UUID;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
 
-public interface ScenarioRepository extends PagingAndSortingRepository<ScenarioItem, UUID>{
+public interface ScenarioRepository extends PagingAndSortingRepository<ScenarioItem, UUID>, ScenarioRepositoryCustom{
 
 	List<ScenarioItem> findByName(String name);
 
