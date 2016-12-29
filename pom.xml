@@ -19,6 +19,7 @@
 		<java.version>1.8</java.version>
 		<selenium.version>2.53.1</selenium.version>
 		<axon.version>2.4.5</axon.version>
+		<plugin.grunt.disabled>false</plugin.grunt.disabled>
 	</properties>
 
 	<dependencies>
@@ -174,6 +175,7 @@
 							<!-- <goal>grunt</goal> -->
 						</goals>
 						<configuration>
+							<disabled>${plugin.grunt.disabled}</disabled>
 							<gruntExecutable>../node_modules/grunt-cli/bin/grunt</gruntExecutable>
 							<runGruntWithNode>true</runGruntWithNode>
 							<sourceDirectory>src/main/resources</sourceDirectory>
