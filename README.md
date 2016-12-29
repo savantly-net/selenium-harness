@@ -9,6 +9,33 @@
 
 [Continuous Integration](https://travis-ci.org/savantly-net/selenium-harness) 
 
+## Run
+pre-requisites
+* java
+	
+	$ java -jar selenium-harness.jar
+	
+You can place an `application.properties` file in the same directory as the jar to override default properties.
+For example -
+
+<pre> 
+Directory of C:\temp\example 
+   application.properties 
+   selenium-harness.jar 
+</pre> 
+
+or you can create a properties file for different profiles by passing the command line parameter -
+
+<pre> 
+Directory of C:\temp\example 
+   application.properties 
+   application-prod.properties 
+   selenium-harness.jar 
+</pre> 
+
+    $ java -jar selenium-harness.jar --spring.profiles.active=prod
+
+
 ## Build  
 pre-requisites
 * nodejs, bower, maven, java
@@ -57,11 +84,11 @@ Selenium-Harness is a SpringBoot application, so you can modify the application.
 
 
 
-## Properties 
+## Default Properties 
 
-    ### Servlet
-    server.port=3030
-    server.contextPath=/
+	### Servlet
+	server.port=3031
+	server.contextPath=/
 	
 	### for pretty printing of json when endpoints accessed over HTTP
 	http.mappers.jsonPrettyPrint=true
@@ -80,26 +107,34 @@ Selenium-Harness is a SpringBoot application, so you can modify the application.
 	selenium.server.enabled=true
 	
 	### Have PhantomJS Use embedded Selenium Server by default
-	phantomjs.selenium-hub=127.0.0.1
-	phantomjs.selenium-hub-port=4444
+	phantomjs.selenium_hub_host=localhost
+	phantomjs.selenium_hub_port=4444
 	
 	### Datasource for Test Case persistence
 	spring.h2.console.enabled=true
-	spring.datasource.url=jdbc:h2:~/db/selenium-harness;DB_CLOSE_ON_EXIT=FALSE
 	spring.datasource.username=sa
 	spring.datasource.password=
 	spring.datasource.driverClassName=org.h2.Driver
-	spring.jpa.hibernate.ddl-auto=update
-
+	spring.datasource.url=jdbc:h2:mem:selenium_harness
+	spring.jpa.hibernate.ddl-auto=create-drop
+	
 	### Scenario Listeners
 	savantly.listener.packages=net.savantly.selenium.harness.listeners.graphite
 	
 	### Graphite Configuration
 	graphite.host=127.0.0.1
 	graphite.metric.prefix=sharness
+	graphite.metric.match[0]=[^a-zA-Z\\d\\s\\.:]
+	graphite.metric.replace[0]=
 	
 	### Fixtures
 	savantly.fixtures=true
 	savantly.fixtures.reportProcessor=true
 	savantly.fixtures.scenario=true
 	
+	### Logging 
+	logging.level.root=INFO
+	logging.level.org.apache.http.wire=INFO
+	logging.level.net.savantly=DEBUG
+	spring.output.ansi.enabled=ALWAYS
+		

@@ -168,7 +168,7 @@
 				<version>1.4.1</version>
 				<executions>
 					<execution>
-						<phase>resources</phase>
+						<phase>generate-resources</phase>
 						<goals>
 							<goal>npm</goal>
 							<goal>grunt</goal>

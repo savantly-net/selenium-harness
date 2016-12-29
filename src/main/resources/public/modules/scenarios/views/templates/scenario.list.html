@@ -1,0 +1,30 @@
+<div class="container-fluid scenario-list">
+			<div class="row" ng-class-even="'even-row'" ng-repeat="scenario in filteredScenarios = (scenarios | filter:searchText)">
+				<div class="col col-sm-8 col-xs-8 shorten">
+					<input type="checkbox" no-wrap ng-model="scenario.checked" />
+					<a href ng-click="scenario.showResponse = !scenario.showResponse">
+						<span ng-show="scenario.response" class="glyphicon glyphicon-info-sign"  ng-class="{'text-success': scenario.passed, 'text-danger': scenario.error || !scenario.passed}"></span>
+						{{scenario.name}}: {{scenario.description}}
+					</a>
+				</div>
+				<div class="col col-sm-4 col-xs-4">
+					<img ng-show="scenario.loading" class="pull-right" height="20px" src="modules/core/img/preloaders/ellipsis.svg" />
+					<div ng-hide="scenario.loading" class="pull-right">
+						<a href="#!/scenarios/{{scenario.id}}/edit"><span title="edit" class="glyphicon glyphicon-pencil"></span></a>
+						<a href ng-click="duplicate(scenario)"><span title="duplicate" class="glyphicon glyphicon-duplicate grey"></span></a>
+						<a href ng-click="executeScenario(scenario)"><span title="execute" class="glyphicon glyphicon-play green"></span></a>
+						<a href ng-click="deleteScenario(scenario)"><span title="delete" class="glyphicon glyphicon-remove red"></span></a>
+					</div>
+				</div>
+				<div class="col col-sm-12 col-xs-12 shorten text-muted">
+					{{scenario.url}}
+					<div>
+						<div ng-show="scenario.showResponse" class="text-info">
+							<p>Result</p>
+							<pre ng-bind="scenario.response"></pre>
+						</div>
+						<div ng-show="scenario.error" ng-bind="scenario.error" class="bg-danger"></div>
+					</div>
+				</div>
+			</div>
+		</div>
