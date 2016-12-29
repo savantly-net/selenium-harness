@@ -10,11 +10,11 @@ public class ViewMatcher extends PersistedModule{
 	private MatchType matchType;
 	private String matchText;
 	
-	public MatchType getViewType() {
+	public MatchType getMatchType() {
 		return matchType;
 	}
-	public void setViewType(MatchType viewType) {
-		this.matchType = viewType;
+	public void setViewType(MatchType matchType) {
+		this.matchType = matchType;
 	}
 	public String getMatchText() {
 		return matchText;

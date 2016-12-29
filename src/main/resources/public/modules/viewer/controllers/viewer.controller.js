@@ -1,8 +1,8 @@
 'use strict';
 
 
-angular.module('viewer').controller('ViewerController', ['$scope', '$rootScope', '$stateParams', '$location', 'Authentication', 'Viewers', 
-	function($scope, $rootScope, $stateParams, $location, Authentication, Viewers) {
+angular.module('viewer').controller('ViewerController', ['$scope', '$rootScope', '$stateParams', '$location', '$state', 'Authentication', 'Viewers', 
+	function($scope, $rootScope, $stateParams, $location, $state, Authentication, Viewers) {
 	
 		var EntityService = Viewers;
 		var locationRedirectRoot = 'viewers';
@@ -23,6 +23,7 @@ angular.module('viewer').controller('ViewerController', ['$scope', '$rootScope',
 		});
 		
 		$scope.addMatcher = function(item){
+			item = item || {};
 			$scope.item.matchers.push(item);
 		}
 		
@@ -34,6 +35,15 @@ angular.module('viewer').controller('ViewerController', ['$scope', '$rootScope',
 		};
 		
 		/************ Generic functions *****************/
+		
+		$scope.redirect = function(){
+			if($stateParams.redirectState && $stateParams.redirectState != undefined) {
+				$state.go($stateParams.redirectState);
+			}
+			else {
+				$location.path(locationRedirectRoot);
+			}
+		};
 		
 		EntityService.query().$promise.then(function(response){
 			$scope.items = response.content;
@@ -58,7 +68,7 @@ angular.module('viewer').controller('ViewerController', ['$scope', '$rootScope',
 			// Redirect after save
 			_item.$save(function(response) {
 				$scope.removeLoader('save');
-				if (doRedirect) $location.path(locationRedirectRoot + '/' + response.id + '/edit');
+				if (doRedirect) $location.path(locationRedirectRoot + '/' + response.id + '/edit/' + ($stateParams.redirectState || ''));
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 				$scope.removeLoader('save');

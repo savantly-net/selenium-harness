@@ -8,22 +8,21 @@
 	<h1>Scenarios</h1>
 	<div>
 		<div>
-			<label>Search: <input ng-model="searchText"></label>
+			<label>Search: <input ng-model="search.$"></label>
 		</div>
 
 		<md-tabs md-selected="selectedIndex" md-border-bottom md-autoselect>
 			<md-tab label="All">
-				<scenario-list scenarios="scenarios" />
+				<scenario-list scenarios="scenarios" search="search" />
 			</md-tab>
-			<!-- <md-tab ng-repeat="tab in tabs"
-			        ng-disabled="tab.disabled"
-				      label="{{tab.title}}">
-				<div class="tab{{$index%4}}" style="padding: 25px; text-align: center;">
-					<div ng-bind="tab.content"></div>
-					<br/>
-					<md-button class="md-primary md-raised" ng-click="removeTab( tab )" ng-disabled="tabs.length <= 1">Remove Tab</md-button>
-				</div>
-			</md-tab> -->
+			<md-tab ng-repeat="tab in tabs" label="{{tab.title}}">
+				<scenario-list scenarios="scenarios" search="tab.search" />
+			</md-tab>
+			<md-tab ng-click="$location.path('/viewers/create/scenarios')">
+				<md-tab-label>
+					<md-icon class="material-icons">add</md-icon>
+				</md-tab-label>
+			</md-tab>
 	    </md-tabs>
 		
 	</div>

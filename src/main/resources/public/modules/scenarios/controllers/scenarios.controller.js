@@ -2,8 +2,8 @@
 
 
 angular.module('scenarios').controller('ScenariosController', 
-		['$scope', '$rootScope', '$filter', '$log', '$stateParams', '$location', '$mdDialog', '$mdToast', 'Authentication', 'Scenarios', 'ReportProcessors', 'TestAggregator',   
-	function($scope, $rootScope, $filter, $log, $stateParams, $location, $mdDialog, $mdToast, Authentication, Scenarios, ReportProcessors, TestAggregator) {
+		['$scope', '$rootScope', '$filter', '$log', '$stateParams', '$location', '$mdDialog', '$mdToast', 'Authentication', 'Scenarios', 'ReportProcessors', 'TestAggregator', 'Viewers',    
+	function($scope, $rootScope, $filter, $log, $stateParams, $location, $mdDialog, $mdToast, Authentication, Scenarios, ReportProcessors, TestAggregator, Viewers) {
 		// This provides Authentication context.
 		$rootScope.title='Scenarios';
 		$scope.authentication = Authentication;
@@ -13,6 +13,7 @@ angular.module('scenarios').controller('ScenariosController',
 		$scope.logs = [];
 		$scope.reportProcessors = [];
 		$scope.showLog = false;
+		$scope.tabs = [];
 		
 		var executionSuccessHandler = function(response){
 			this.loading = false;
@@ -35,6 +36,16 @@ angular.module('scenarios').controller('ScenariosController',
 		});
 		ReportProcessors.query().$promise.then(function(response){
 			$scope.reportProcessors = $scope.reportProcessors.concat(response.content);
+		});
+		Viewers.query().$promise.then(function(response){
+			response.content.map(function(viewer){
+				var tab = {title: viewer.name};
+				tab.search = {};
+				viewer.matchers.map(function(matcher){
+					tab.search = matcher.matchText;
+				});
+				$scope.tabs.push(tab);
+			});
 		});
 		
 		$scope.addLoader = function(id){

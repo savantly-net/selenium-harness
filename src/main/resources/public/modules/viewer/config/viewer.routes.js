@@ -12,8 +12,16 @@ angular.module('viewer').config(['$stateProvider', '$urlRouterProvider',
 			url:'/viewers/create',
 			templateUrl: 'modules/viewer/views/edit.view.html'
 		}).
+		state('createViewerWithRedirect', {
+			url: '/viewers/create/:redirectState?',
+			templateUrl: 'modules/viewer/views/edit.view.html'
+		}).
 		state('editViewer', {
 			url:'/viewers/:id/edit',
+			templateUrl: 'modules/viewer/views/edit.view.html'
+		}).
+		state('editViewerWithRedirect', {
+			url:'/viewers/:id/edit/:redirectState?',
 			templateUrl: 'modules/viewer/views/edit.view.html'
 		});
 	}

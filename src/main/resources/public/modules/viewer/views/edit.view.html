@@ -1,7 +1,7 @@
 <div data-ng-controller="ViewerController" data-ng-init="findOne()">
 	<h1>Edit Viewer</h1>
 	<div class="col-md-12 container">
-        <form class="form-horizontal col-md-6 pull-left" data-ng-submit="save(true)" novalidate>
+        <form class="form-horizontal col-md-6 col-xs-12 pull-left" data-ng-submit="save(true)" novalidate>
             <fieldset>
                 <div class="form-group">
                     <label class="control-label" for="name">Name</label>
@@ -18,16 +18,26 @@
                 
                 <div class="form-group" ng-show="item.id">
                     <label class="control-label" for="matchers">Matchers</label>
+                    <div class="btn-group pull-right">
+                    	<button ng-click="addMatcher()" class="button" type="button" >Add</button>
+                    </div>
                     <div class="controls">
-                    	<div class="well">
-                    		<div ng-repeat="matcher in item.matchers"><a href="#" ng-click="removeMatcher(matcher)"><span class="glyphicon glyphicon-remove red"></span></a>
-	                        <select name="repeatSelect" ng-model="matcher.matchType">
-						    	<option ng-repeat="option in matchTypes" ng-value="option">{{option}}</option>
-						    </select>
-						    <input type="text" ng-model="matcher.matchText" />
-                    		</div>
+                    	<div layout="row" ng-repeat="matcher in item.matchers">
+                    		
+                    		<md-button class="md-raised md-warn" ng-click="removeMatcher(matcher)">
+								<md-icon class="material-icons">clear</md-icon>
+					        </md-button>
+					        <md-input-container>
+  								<label>Type</label>
+					        	<md-select name="repeatSelect" ng-model="matcher.matchType">
+							    	<md-option ng-repeat="option in matchTypes" ng-value="option">{{option}}</md-option>
+							    </md-select>
+							</md-input-container>
+					        <md-input-container flex>
+					        	<label>Search Text</label>
+					        	<input type="text" ng-model="matcher.matchText" />
+					        </md-input-container>
                     	</div>
-					    <button ng-click="addMatcher()" class="button" >Add</button>
                     </div>
                 </div>
 
@@ -36,7 +46,7 @@
                     <input ng-click="cancel()" class="btn btn-default" value="Cancel" />
                 </div>
                 <div>
-                	<a href="#!/viewers">Back to List</a>
+                	<a href ng-click="redirect()">Return</a>
                 </div>
 				<div data-ng-show="error" class="text-danger">
 					<strong data-ng-bind="error"></strong>

@@ -1,5 +1,5 @@
 <div class="container-fluid scenario-list">
-			<div class="row" ng-class-even="'even-row'" ng-repeat="scenario in filteredScenarios = (scenarios | filter:searchText)">
+			<div class="row" ng-class-even="'even-row'" ng-repeat="scenario in scenarios | filter:search">
 				<div class="col col-sm-8 col-xs-8 shorten">
 					<input type="checkbox" no-wrap ng-model="scenario.checked" />
 					<a href ng-click="scenario.showResponse = !scenario.showResponse">

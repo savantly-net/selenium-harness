@@ -7,14 +7,19 @@
 	<h1>Viewers</h1>
 	<div>
 		<hr />
-		<div class="container-fluid scene-list">
-			<div class="row" ng-class-even="'even-row'" ng-repeat="item in items">
-				<div class="col col-sm-8 col-xs-8 shorten">
-					<input type="checkbox" no-wrap ng-model="item.checked" />
-					{{item.name}}: {{item.description}} {{item.matchType}} {{item.matchText}}
-				</div>
-				<div class="btn-group pull-right col col-sm-4 col-xs-4" role="group" aria-label="Viewer Operations">
-					<button type="button" class="btn btn-default" ng-click="$location.path('/viewers/'+item.id+'/edit')"><span title="select all" class="glyphicon glyphicon-pencil"></span></button>
+		<div class="scene-list">
+			<div layout="row" ng-class-even="'even-row'" ng-repeat="item in items">
+				<md-input-container>
+					<md-checkbox ng-model="item.checked" />
+				</md-input-container>
+				<md-button class="md-raised md-warn" ng-click="deleteItem(item)">
+					<md-icon class="material-icons">clear</md-icon>
+		        </md-button>
+		        <md-button class="md-raised" ng-click="$location.path('/viewers/'+item.id+'/edit')">
+					<md-icon class="material-icons">edit</md-icon>
+		        </md-button>
+				<div flex class="shorten">
+					{{item.name}}: {{item.description}}
 				</div>
 			</div>
 		</div>

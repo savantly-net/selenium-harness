@@ -171,8 +171,14 @@
 						<phase>generate-resources</phase>
 						<goals>
 							<goal>npm</goal>
-							<goal>grunt</goal>
+							<!-- <goal>grunt</goal> -->
 						</goals>
+						<configuration>
+							<gruntExecutable>../node_modules/grunt-cli/bin/grunt</gruntExecutable>
+							<runGruntWithNode>true</runGruntWithNode>
+							<sourceDirectory>src/main/resources</sourceDirectory>
+							<jsSourceDirectory>public</jsSourceDirectory>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>
