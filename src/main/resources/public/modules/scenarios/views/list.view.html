@@ -1,22 +1,24 @@
 <section data-ng-controller="ScenariosController">
-	<div class="btn-group pull-right" role="group" aria-label="Scenario Operations">
-		<button type="button" class="btn btn-default" ng-click="selectAll(true)"><span title="select all" class="glyphicon glyphicon-check"></span></button>
-		<button type="button" class="btn btn-default" ng-click="selectAll(false)"><span title="un-select all" class="glyphicon glyphicon-unchecked"></span></button>
-		<button type="button" class="btn btn-default" ng-disabled="!(filteredScenarios | filter:{checked:true}).length > 0" ng-click="executeSelectedScenarios()"><span title="execute" class="glyphicon glyphicon-play"></span></button>
-		<button type="button" class="btn btn-default" ng-click="$location.path('/scenarios/create')"><span title="create" class="glyphicon glyphicon-plus"></span></button>
-	</div>
-	<h1>Scenarios</h1>
 	<div>
-		<div>
-			<label>Search: <input ng-model="search.$"></label>
+		<div layout>
+			<div flex><h1>Scenarios</h1></div>
+			<md-button class="md-raised md-primary" ng-click="$location.path('/scenarios/create')">
+				<md-icon class="material-icons">add</md-icon>
+	        </md-button>
+		</div>
+		<div layout>
+			<md-input-container flex>
+				<label>Search:</label>
+				<input type="text" ng-model="search.$" />
+			</md-input-container>
 		</div>
 
-		<md-tabs md-selected="selectedIndex" md-border-bottom md-autoselect>
+		<md-tabs md-selected="selectedTabIndex" md-border-bottom md-autoselect>
 			<md-tab label="All">
-				<scenario-list scenarios="scenarios" search="search" />
+				<scenario-list scenarios="scenarios" search="search" execute-scenario="executeScenario" />
 			</md-tab>
 			<md-tab ng-repeat="tab in tabs" label="{{tab.title}}">
-				<scenario-list scenarios="scenarios" search="tab.search" />
+				<scenario-list scenarios="scenarios" search="tab.search" execute-scenario="executeScenario" />
 			</md-tab>
 			<md-tab ng-click="$location.path('/viewers/create/scenarios')">
 				<md-tab-label>

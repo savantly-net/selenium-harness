@@ -2,8 +2,8 @@
 
 
 angular.module('scenarios').controller('ScenariosController', 
-		['$scope', '$rootScope', '$filter', '$log', '$stateParams', '$location', '$mdDialog', '$mdToast', 'Authentication', 'Scenarios', 'ReportProcessors', 'TestAggregator', 'Viewers',    
-	function($scope, $rootScope, $filter, $log, $stateParams, $location, $mdDialog, $mdToast, Authentication, Scenarios, ReportProcessors, TestAggregator, Viewers) {
+		['$scope', '$rootScope', '$log', '$stateParams', '$location', '$mdDialog', '$mdToast', 'Authentication', 'Scenarios', 'ReportProcessors', 'TestAggregator', 'Viewers',    
+	function($scope, $rootScope, $log, $stateParams, $location, $mdDialog, $mdToast, Authentication, Scenarios, ReportProcessors, TestAggregator, Viewers) {
 		// This provides Authentication context.
 		$rootScope.title='Scenarios';
 		$scope.authentication = Authentication;
@@ -90,14 +90,7 @@ angular.module('scenarios').controller('ScenariosController',
 			$location.path('/scenarios');
 		};
 		
-		$scope.executeSelectedScenarios = function(){
-			for (var scenarioIndex = 0; scenarioIndex < $scope.scenarios.length; scenarioIndex++) {
-				var scenario = $scope.scenarios[scenarioIndex];
-				if(scenario.checked){
-					$scope.executeScenario(scenario);
-				}
-			}
-		}
+
 		
 		// Find existing item
 		$scope.findOne = function() {
@@ -148,13 +141,7 @@ angular.module('scenarios').controller('ScenariosController',
 				});
 			});
 		};
-		
-		$scope.selectAll = function(value){
-			var filteredScenarios = $filter('filter')($scope.scenarios, $scope.searchText);
-			for(var i=0; i<filteredScenarios.length; i++){
-				filteredScenarios[i].checked = value;
-			}
-		};
+
 		
 		$scope.changeReportProcessor = function(selectedReportProcessor){
 			console.log(selectedReportProcessor);
