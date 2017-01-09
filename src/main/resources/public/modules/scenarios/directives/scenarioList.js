@@ -10,9 +10,12 @@ angular.module('scenarios')
 	    link: function(scope, elements, attrs){
 	    	var scenarioExecutor = scope.executeScenario();
 	    	
+	    	scope.filteredScenarios = $filter('filter')(scope.scenarios, scope.search);
+	    	scope.passingScenarios = function(){
+	    		
+	    	};
 	    	scope.selectAll = function(value){
-				var filteredScenarios = $filter('filter')(scope.scenarios, scope.search);
-				for(var i=0; i<filteredScenarios.length; i++){
+				for(var i=0; i < scope.filteredScenarios.length; i++){
 					filteredScenarios[i].checked = value;
 				}
 			};
